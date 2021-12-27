@@ -35,6 +35,7 @@
 #define NUMPIXELS 24 // Popular NeoPixel ring size
 
 
+
 Adafruit_NeoPixel strip1 = Adafruit_NeoPixel(NUMPIXELS, LED_PIN1, NEO_GRB + NEO_KHZ800);
 Adafruit_NeoPixel strip2 = Adafruit_NeoPixel(NUMPIXELS, LED_PIN2, NEO_GRB + NEO_KHZ800);
 Adafruit_NeoPixel strip3 = Adafruit_NeoPixel(NUMPIXELS, LED_PIN3, NEO_GRB + NEO_KHZ800);
@@ -61,7 +62,6 @@ Adafruit_NeoPixel strip10 = Adafruit_NeoPixel(NUMPIXELS, LED_PIN10, NEO_GRB + NE
 enum {
   INIT,
   WAIT_BALL,
-  CHANGE_LED,
   STOP
 } state;
 
@@ -77,7 +77,7 @@ int led9 = 0;
 int led10 = 0;
 
 void setup() {
-
+//Serial.begin(9600); 
 
   // These lines are specifically to support the Adafruit Trinket 5V 16 MHz.
   // Any other board, you can remove this part (but no harm leaving it):
@@ -174,14 +174,8 @@ void loop() {
         strip9.show();
         strip10.show();
 
-
         delay(DELAYVAL); // Pause before next pass through loop
-
-
       }
-
-
-
 
       state = WAIT_BALL;
 
@@ -192,111 +186,84 @@ void loop() {
 
       if (digitalRead(PIR_PIN1) == HIGH && led1 == 0) { //le capteur détecte un mouvement
         Serial.println("mouvement detecte 1 ");
-        strip1.clear();
+       
+        //theaterChaseRainbow(LED_PIN1, 50); // White, half brightness
+        //theaterChase(LED_PIN1, strip1.Color(127, 127, 127), 50); // White, half brightness
         theaterChase(LED_PIN1, strip1.Color(127, 127, 127), 50); // White, half brightness
-        for (int i = 0; i < NUMPIXELS; i++) {
-          strip1.setPixelColor(i, strip1.Color(255, 0, 0));
-          strip1.show();
-        }
+        colorWipe(LED_PIN1,strip1.Color(255, 0, 0) , 50);
+        
+        //red(LED_PIN1);
         led1 = 1;
       }
 
       if (digitalRead(PIR_PIN2) == HIGH && led2 == 0) { //le capteur détecte un mouvement
         Serial.println("mouvement detecte 2 ");
         strip2.clear();
-        for (int i = 0; i < NUMPIXELS; i++) {
-          strip2.setPixelColor(i, strip2.Color(255, 0, 0));
-          strip2.show();
-        }
+        red(LED_PIN2);
+        green(LED_PIN2);
         led2 = 1;
       }
 
       if (digitalRead(PIR_PIN3) == HIGH && led3 == 0) { //le capteur détecte un mouvement
         Serial.println("mouvement detecte 3 ");
         strip3.clear();
-        for (int i = 0; i < NUMPIXELS; i++) {
-          strip3.setPixelColor(i, strip3.Color(255, 0, 0));
-          strip3.show();
-        }
+        red(LED_PIN3);
         led3 = 1;
       }
 
       if (digitalRead(PIR_PIN4) == HIGH && led4 == 0) { //le capteur détecte un mouvement
         Serial.println("mouvement detecte 4 ");
         strip4.clear();
-        for (int i = 0; i < NUMPIXELS; i++) {
-          strip4.setPixelColor(i, strip4.Color(255, 0, 0));
-          strip4.show();
-        }
+        theaterChase(LED_PIN4, strip4.Color(127, 127, 127), 50); // White, half brightness
+        strip4.clear();
+        red(LED_PIN4);
         led4 = 1;
       }
 
       if (digitalRead(PIR_PIN5) == HIGH && led5 == 0) { //le capteur détecte un mouvement
         Serial.println("mouvement detecte 5 ");
         strip5.clear();
-        for (int i = 0; i < NUMPIXELS; i++) {
-          strip5.setPixelColor(i, strip5.Color(255, 0, 0));
-          strip5.show();
-        }
+        red(LED_PIN5);
         led5 = 1;
       }
 
       if (digitalRead(PIR_PIN6) == HIGH && led6 == 0) { //le capteur détecte un mouvement
         Serial.println("mouvement detecte 6 ");
         strip6.clear();
-        for (int i = 0; i < NUMPIXELS; i++) {
-          strip6.setPixelColor(i, strip6.Color(255, 0, 0));
-          strip6.show();
-        }
+        red(LED_PIN6);
         led6 = 1;
       }
 
       if (digitalRead(PIR_PIN7) == HIGH && led7 == 0) { //le capteur détecte un mouvement
         Serial.println("mouvement detecte 7 ");
         strip7.clear();
-        for (int i = 0; i < NUMPIXELS; i++) {
-          strip7.setPixelColor(i, strip7.Color(255, 0, 0));
-          strip7.show();
-        }
+        red(LED_PIN7);
         led7 = 1;
       }
 
       if (digitalRead(PIR_PIN8) == HIGH && led8 == 0) { //le capteur détecte un mouvement
         Serial.println("mouvement detecte 8 ");
         strip8.clear();
-        for (int i = 0; i < NUMPIXELS; i++) {
-          strip8.setPixelColor(i, strip8.Color(255, 0, 0));
-          strip8.show();
-        }
+        red(LED_PIN8);
         led8 = 1;
       }
 
       if (digitalRead(PIR_PIN9) == HIGH && led9 == 0) { //le capteur détecte un mouvement
         Serial.println("mouvement detecte 9 ");
         strip9.clear();
-        for (int i = 0; i < NUMPIXELS; i++) {
-          strip9.setPixelColor(i, strip9.Color(255, 0, 0));
-          strip9.show();
-        }
+        red(LED_PIN9);
         led9 = 1;
       }
 
       if (digitalRead(PIR_PIN10) == HIGH && led10 == 0) { //le capteur détecte un mouvement
         Serial.println("mouvement detecte 10 ");
         strip10.clear();
-        for (int i = 0; i < NUMPIXELS; i++) {
-          strip10.setPixelColor(i, strip10.Color(255, 0, 0));
-          strip10.show();
-        }
+        red(LED_PIN10);
         led10 = 1;
       }
 
       break;
 
-    case CHANGE_LED:
-      Serial.println("CHANGE_LED");
-
-      break;
 
     case STOP:
       Serial.println("STOP");
@@ -313,50 +280,47 @@ void loop() {
 
 }
 
-/*
-  void BallIn(){
-
-  theaterChase(strip0.Color(127, 127, 127), 50); // White, half brightness
-  colorWipe(strip0.Color(255,   0,   0), 50);
-
+void red(int led_pin){
+  Adafruit_NeoPixel strip = Adafruit_NeoPixel(NUMPIXELS, led_pin, NEO_GRB + NEO_KHZ800);
+  for (int i = 0; i < NUMPIXELS; i++) {
+    strip.setPixelColor(i, strip.Color(255, 0, 0));
+    strip.show();
+    
   }
+}
 
-  // Some functions of our own for creating animated effects -----------------
+void green(int led_pin){
+  Adafruit_NeoPixel strip = Adafruit_NeoPixel(NUMPIXELS, led_pin, NEO_GRB + NEO_KHZ800);
+  for (int i = 0; i < NUMPIXELS; i++) {
+    strip.setPixelColor(i, strip.Color(0, 255, 0));
+    strip.show();
+    
+  }
+}
 
-  // Fill strip pixels one after another with a color. Strip is NOT cleared
-  // first; anything there will be covered pixel by pixel. Pass in color
-  // (as a single 'packed' 32-bit value, which you can get by calling
-  // strip.Color(red, green, blue) as shown in the loop() function above),
-  // and a delay time (in milliseconds) between pixels.
-  void colorWipe(uint32_t color, int wait) {
-  for(int i=0; i<strip0.numPixels(); i++) { // For each pixel in strip...
-    strip0.setPixelColor(i, color);         //  Set pixel's color (in RAM)
-    strip0.show();                          //  Update strip to match
-    delay(wait);                           //  Pause for a moment
-  }
-  }
-*/
+
   // Theater-marquee-style chasing lights. Pass in a color (32-bit value,
   // a la strip.Color(r,g,b) as mentioned above), and a delay time (in ms)
   // between frames.
   void theaterChase(int led_pin, uint32_t color, int wait) {
     Adafruit_NeoPixel strip = Adafruit_NeoPixel(NUMPIXELS, led_pin, NEO_GRB + NEO_KHZ800);
-  for(int a=0; a<10; a++) {  // Repeat 10 times...
-    for(int b=0; b<3; b++) { //  'b' counts from 0 to 2...
-      strip.clear();         //   Set all pixels in RAM to 0 (off)
-      // 'c' counts up from 'b' to end of strip in steps of 3...
-      for(int c=b; c<strip.numPixels(); c += 3) {
-        strip.setPixelColor(c, color); // Set pixel 'c' to value 'color'
+    for(int a=0; a<10; a++) {  // Repeat 10 times...
+      for(int b=0; b<3; b++) { //  'b' counts from 0 to 2...
+        strip.clear();         //   Set all pixels in RAM to 0 (off)
+        // 'c' counts up from 'b' to end of strip in steps of 3...
+        for(int c=b; c<strip.numPixels(); c += 3) {
+          strip.setPixelColor(c, color); // Set pixel 'c' to value 'color'
+        }
+        strip.show(); // Update strip with new contents
+        delay(wait);  // Pause for a moment
       }
-      strip.show(); // Update strip with new contents
-      delay(wait);  // Pause for a moment
     }
   }
-  }
-/*
+
 
   // Rainbow-enhanced theater marquee. Pass delay time (in ms) between frames.
-  void theaterChaseRainbow(int wait) {
+  void theaterChaseRainbow(int led_pin, int wait) {
+    Adafruit_NeoPixel strip = Adafruit_NeoPixel(NUMPIXELS, led_pin, NEO_GRB + NEO_KHZ800);
   int firstPixelHue = 0;     // First pixel starts at red (hue 0)
   for(int a=0; a<30; a++) {  // Repeat 30 times...
     for(int b=0; b<3; b++) { //  'b' counts from 0 to 2...
@@ -374,13 +338,28 @@ void loop() {
       delay(wait);                 // Pause for a moment
       firstPixelHue += 65536 / 90; // One cycle of color wheel over 90 frames
     }
+   }
+  }
+
+    // Some functions of our own for creating animated effects -----------------
+
+  // Fill strip pixels one after another with a color. Strip is NOT cleared
+  // first; anything there will be covered pixel by pixel. Pass in color
+  // (as a single 'packed' 32-bit value, which you can get by calling
+  // strip.Color(red, green, blue) as shown in the loop() function above),
+  // and a delay time (in milliseconds) between pixels.
+  void colorWipe(int led_pin, uint32_t color, int wait) {
+    Adafruit_NeoPixel strip = Adafruit_NeoPixel(NUMPIXELS, led_pin, NEO_GRB + NEO_KHZ800);
+  for(int i=0; i<strip.numPixels(); i++) { // For each pixel in strip...
+    strip.setPixelColor(i, color);         //  Set pixel's color (in RAM)
+    strip.show();                          //  Update strip to match
+    delay(wait);                           //  Pause for a moment
   }
   }
-
-
-
+  
   // Rainbow cycle along whole strip. Pass delay time (in ms) between frames.
-  void rainbow(int wait) {
+  void rainbow(int led_pin, int wait) {
+    Adafruit_NeoPixel strip = Adafruit_NeoPixel(NUMPIXELS, led_pin, NEO_GRB + NEO_KHZ800);
   // Hue of first pixel runs 5 complete loops through the color wheel.
   // Color wheel has a range of 65536 but it's OK if we roll over, so
   // just count from 0 to 5*65536. Adding 256 to firstPixelHue each time
@@ -392,31 +371,14 @@ void loop() {
     // ColorHSV() function, default 255), and a true/false flag for whether
     // to apply gamma correction to provide 'truer' colors (default true).
 
-    strip1.rainbow(firstPixelHue);
-    strip2.rainbow(firstPixelHue);
-    strip3.rainbow(firstPixelHue);
-    strip4.rainbow(firstPixelHue);
-    strip5.rainbow(firstPixelHue);
-    strip6.rainbow(firstPixelHue);
-    strip7.rainbow(firstPixelHue);
-    strip8.rainbow(firstPixelHue);
-    strip9.rainbow(firstPixelHue);
-    strip10.rainbow(firstPixelHue);
+    strip.rainbow(firstPixelHue);
+
     // Above line is equivalent to:
     // strip.rainbow(firstPixelHue, 1, 255, 255, true);
 
-    strip1.show();// Update strip with new contents
-    strip2.show();
-    strip3.show();
-    strip4.show();
-    strip5.show();
-    strip6.show();
-    strip7.show();
-    strip8.show();
-    strip9.show();
-    strip0.show();
+    strip.show();// Update strip with new contents
 
 
+
+    }
   }
-  }
-*/
