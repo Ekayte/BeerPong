@@ -48,6 +48,8 @@ Adafruit_NeoPixel strip9 = Adafruit_NeoPixel(NUMPIXELS, LED_PIN9, NEO_GRB + NEO_
 Adafruit_NeoPixel strip10 = Adafruit_NeoPixel(NUMPIXELS, LED_PIN10, NEO_GRB + NEO_KHZ800);
 
 
+
+
 // Argument 1 = Number of pixels in NeoPixel strip
 // Argument 2 = Arduino pin number (most are valid)
 // Argument 3 = Pixel type flags, add together as needed:
@@ -78,6 +80,40 @@ int led7 = 0;
 int led8 = 0;
 int led9 = 0;
 int led10 = 0;
+
+uint32_t color_strip1_red = strip1.Color(255, 0, 0);
+uint32_t color_strip2_red = strip2.Color(255, 0, 0);
+uint32_t color_strip3_red = strip3.Color(255, 0, 0);
+uint32_t color_strip4_red = strip4.Color(255, 0, 0);
+uint32_t color_strip5_red = strip5.Color(255, 0, 0);
+uint32_t color_strip6_red = strip6.Color(255, 0, 0);
+uint32_t color_strip7_red = strip7.Color(255, 0, 0);
+uint32_t color_strip8_red = strip8.Color(255, 0, 0);
+uint32_t color_strip9_red = strip9.Color(255, 0, 0);
+uint32_t color_strip10_red = strip10.Color(255, 0, 0);
+
+uint32_t color_strip1_green = strip1.Color(0, 255, 0);
+uint32_t color_strip2_green = strip2.Color(0, 255, 0);
+uint32_t color_strip3_green = strip3.Color(0, 255, 0);
+uint32_t color_strip4_green = strip4.Color(0, 255, 0);
+uint32_t color_strip5_green = strip5.Color(0, 255, 0);
+uint32_t color_strip6_green = strip6.Color(0, 255, 0);
+uint32_t color_strip7_green = strip7.Color(0, 255, 0);
+uint32_t color_strip8_green = strip8.Color(0, 255, 0);
+uint32_t color_strip9_green = strip9.Color(0, 255, 0);
+uint32_t color_strip10_green = strip10.Color(0, 255, 0);
+
+uint32_t color_strip1_blue = strip1.Color(0, 0, 255);
+uint32_t color_strip2_blue = strip2.Color(0, 0, 255);
+uint32_t color_strip3_blue = strip3.Color(0, 0, 255);
+uint32_t color_strip4_blue = strip4.Color(0, 0, 255);
+uint32_t color_strip5_blue = strip5.Color(0, 0, 255);
+uint32_t color_strip6_blue = strip6.Color(0, 0, 255);
+uint32_t color_strip7_blue = strip7.Color(0, 0, 255);
+uint32_t color_strip8_blue = strip8.Color(0, 0, 255);
+uint32_t color_strip9_blue = strip9.Color(0, 0, 255);
+uint32_t color_strip10_blue = strip10.Color(0, 0, 255);
+
 
 void setup() {
 //Serial.begin(9600); 
@@ -303,7 +339,7 @@ void wave1(int wait){
 
   for(int i = 0; i<13; i++){
     
-    if(led7 == 0){  
+    if(led2 == 0){  
       strip2.setPixelColor(top_left, strip2.Color(255, 0, 0));          //ring gauche top
       top_left--;
   
@@ -313,12 +349,32 @@ void wave1(int wait){
       }
       bot_left++;
     }
+    if(led2 == 1){  
+      strip2.setPixelColor(top_left, strip2.Color(0, 0, 255));          //ring gauche top
+      top_left--;
+  
+       strip2.setPixelColor(bot_left, strip2.Color(0, 0, 255));         //ring gauche bot
+      if(bot_left == 24){
+        bot_left = -1;
+      }
+      bot_left++;
+    }
     
    if(led7 == 0){
-      strip7.setPixelColor(top_topLeft, strip7.Color(255, 0, 0));          //ring haut gauche top
+      strip7.setPixelColor(top_topLeft,strip7.Color(255, 0, 0));          //ring haut gauche top
       top_topLeft--;
   
       strip7.setPixelColor(bot_topLeft, strip7.Color(255, 0, 0));         //ring haut gauche bot
+      if(bot_topLeft == 24){
+        bot_topLeft = -1;
+      }
+      bot_topLeft++;
+   }
+   if(led7 == 1){
+      strip7.setPixelColor(top_topLeft, strip7.Color(0, 0, 255));          //ring haut gauche top
+      top_topLeft--;
+  
+      strip7.setPixelColor(bot_topLeft, strip7.Color(0, 0, 255));         //ring haut gauche bot
       if(bot_topLeft == 24){
         bot_topLeft = -1;
       }
@@ -370,11 +426,31 @@ delay(wait);
       }
       revers_bot_left--;
     }
+    if(led2 == 1){
+      strip2.setPixelColor(revers_top_left, strip2.Color(255, 0, 0));         //ring gauche top
+      revers_top_left++;
+      
+      strip2.setPixelColor(revers_bot_left, strip2.Color(255, 0, 0));         //  ring gauche bot
+      if(revers_bot_left == 0){
+        revers_bot_left = 24;
+      }
+      revers_bot_left--;
+    }
   if(led7 == 0){
     strip7.setPixelColor(revers_top_topLeft, strip7.Color(0, 255, 0));          //ring haut gauche top
     revers_top_topLeft++;
 
     strip7.setPixelColor(revers_bot_topLeft, strip7.Color(0, 255, 0));         //ring haut gauche bot
+    if(revers_bot_topLeft == 0){
+      revers_bot_topLeft = 24;
+    }
+    revers_bot_topLeft--;
+  }
+  if(led7 == 1){
+    strip7.setPixelColor(revers_top_topLeft, strip2.Color(255, 0, 0));          //ring haut gauche top
+    revers_top_topLeft++;
+
+    strip7.setPixelColor(revers_bot_topLeft, strip2.Color(255, 0, 0));         //ring haut gauche bot
     if(revers_bot_topLeft == 0){
       revers_bot_topLeft = 24;
     }
@@ -447,11 +523,31 @@ void wave2(int wait){
       }
       bot_right--;
     }
+     if(led1 == 1){
+      strip1.setPixelColor(top_right, strip1.Color(0, 0, 255));         //ring droite top
+      top_right++;
+      
+      strip1.setPixelColor(bot_right, strip1.Color(0, 0, 255));         //ring droite bot
+      if(bot_right == 0){
+        bot_right = 24;
+      }
+      bot_right--;
+    }
     if(led3 == 0){  
       strip3.setPixelColor(top_left, strip3.Color(255, 0, 0));          //ring gauche top
       top_left--;
   
        strip3.setPixelColor(bot_left, strip3.Color(255, 0, 0));         //ring gauche bot
+      if(bot_left == 24){
+        bot_left = -1;
+      }
+      bot_left++;
+    }
+    if(led3 == 1){  
+      strip3.setPixelColor(top_left, strip3.Color(0, 0, 255));          //ring gauche top
+      top_left--;
+  
+       strip3.setPixelColor(bot_left, strip3.Color(0, 0, 255));         //ring gauche bot
       if(bot_left == 24){
         bot_left = -1;
       }
@@ -467,6 +563,16 @@ void wave2(int wait){
       }
       bot_topLeft++;
    }
+    if(led6 == 1){
+      strip6.setPixelColor(top_topLeft, strip6.Color(0, 0, 255));          //ring haut gauche top
+      top_topLeft--;
+  
+      strip6.setPixelColor(bot_topLeft, strip6.Color(0, 0, 255));         //ring haut gauche bot
+      if(bot_topLeft == 24){
+        bot_topLeft = -1;
+      }
+      bot_topLeft++;
+   }
    if(led7 == 0){
     strip7.setPixelColor(top_topRight, strip7.Color(255, 0, 0));          //ring haut droite top
     if(top_topRight == 0){
@@ -475,6 +581,16 @@ void wave2(int wait){
     top_topRight--;
 
     strip7.setPixelColor(bot_topRight, strip7.Color(255, 0, 0));         //ring haut droite bot
+    bot_topRight++;
+   } 
+   if(led7 == 1){
+    strip7.setPixelColor(top_topRight, strip7.Color(0, 0, 255));          //ring haut droite top
+    if(top_topRight == 0){
+      top_topRight = 24;
+    }
+    top_topRight--;
+
+    strip7.setPixelColor(bot_topRight, strip7.Color(0, 0, 255));         //ring haut droite bot
     bot_topRight++;
    } 
     strip1.show();                          //  Update strip 2(droite)
@@ -532,11 +648,31 @@ delay(wait);
       }
       revers_bot_right++;
     }
+    if(led1 == 1){
+      strip1.setPixelColor(revers_top_right, strip1.Color(255, 0, 0));         //ring droite top
+      revers_top_right--;
+      
+      strip1.setPixelColor(revers_bot_right, strip1.Color(255, 0, 0));         //ring droite bot
+      if(revers_bot_right == 24){
+        revers_bot_right = -1;
+      }
+      revers_bot_right++;
+    }
     if(led3 == 0){
       strip3.setPixelColor(revers_top_left, strip3.Color(0, 255, 0));         //ring gauche top
       revers_top_left++;
       
       strip3.setPixelColor(revers_bot_left, strip3.Color(0, 255, 0));         //  ring gauche bot
+      if(revers_bot_left == 0){
+        revers_bot_left = 24;
+      }
+      revers_bot_left--;
+    }
+    if(led3 == 1){
+      strip3.setPixelColor(revers_top_left, strip3.Color(255, 0, 0));         //ring gauche top
+      revers_top_left++;
+      
+      strip3.setPixelColor(revers_bot_left, strip3.Color(255, 0, 0));         //  ring gauche bot
       if(revers_bot_left == 0){
         revers_bot_left = 24;
       }
@@ -552,6 +688,16 @@ delay(wait);
       }
       revers_bot_topLeft--;
     }
+    if(led6 == 1){
+      strip6.setPixelColor(revers_top_topLeft, strip6.Color(255, 0, 0));          //ring haut gauche top
+      revers_top_topLeft++;
+  
+      strip6.setPixelColor(revers_bot_topLeft, strip6.Color(255, 0, 0));         //ring haut gauche bot
+      if(revers_bot_topLeft == 0){
+        revers_bot_topLeft = 24;
+      }
+      revers_bot_topLeft--;
+    }
     if(led7 == 0){
       strip7.setPixelColor(revers_top_topRight, strip7.Color(0, 255, 0));          //ring haut droite top
       if(revers_top_topRight == 24){
@@ -560,6 +706,16 @@ delay(wait);
       revers_top_topRight++;
   
       strip7.setPixelColor(revers_bot_topRight, strip7.Color(0, 255, 0));         //ring haut droite bot
+      revers_bot_topRight--;
+    }
+    if(led7 == 1){
+      strip7.setPixelColor(revers_top_topRight, strip7.Color(255, 0, 0));          //ring haut droite top
+      if(revers_top_topRight == 24){
+        revers_top_topRight = -1;
+      }
+      revers_top_topRight++;
+  
+      strip7.setPixelColor(revers_bot_topRight, strip7.Color(255, 0, 0));         //ring haut droite bot
       revers_bot_topRight--;
     }
     strip1.show();                          //  Update strip to match
@@ -632,11 +788,31 @@ void wave3(int wait){
       }
       bot_right--;
     }  
+    if(led2 == 1){
+      strip2.setPixelColor(top_right, strip2.Color(0, 0, 255));         //ring droite top
+      top_right++;
+      
+      strip2.setPixelColor(bot_right, strip2.Color(0, 0, 255));         //ring droite bot
+      if(bot_right == 0){
+        bot_right = 24;
+      }
+      bot_right--;
+    }  
     if(led4 == 0){
       strip4.setPixelColor(top_left, strip4.Color(255, 0, 0));          //ring gauche top
       top_left--;
   
        strip4.setPixelColor(bot_left, strip4.Color(255, 0, 0));         //ring gauche bot
+      if(bot_left == 24){
+        bot_left = -1;
+      }
+      bot_left++;
+    }
+    if(led4 == 1){
+      strip4.setPixelColor(top_left, strip4.Color(0, 0, 255));          //ring gauche top
+      top_left--;
+  
+       strip4.setPixelColor(bot_left, strip4.Color(0, 0, 255));         //ring gauche bot
       if(bot_left == 24){
         bot_left = -1;
       }
@@ -652,6 +828,16 @@ void wave3(int wait){
       }
       bot_topLeft++;
    }
+   if(led5 == 1){
+      strip5.setPixelColor(top_topLeft, strip5.Color(0, 0, 255));          //ring haut gauche top
+      top_topLeft--;
+  
+      strip5.setPixelColor(bot_topLeft, strip5.Color(0, 0, 255));         //ring haut gauche bot
+      if(bot_topLeft == 24){
+        bot_topLeft = -1;
+      }
+      bot_topLeft++;
+   }
    if(led6 == 0){
       strip6.setPixelColor(top_topRight, strip6.Color(255, 0, 0));          //ring haut gauche top
       if(top_topRight == 0){
@@ -660,6 +846,16 @@ void wave3(int wait){
       top_topRight--;
   
       strip6.setPixelColor(bot_topRight, strip6.Color(255, 0, 0));         //ring haut gauche bot
+      bot_topRight++;
+   }
+   if(led6 == 1){
+      strip6.setPixelColor(top_topRight, strip6.Color(0, 0, 255));          //ring haut gauche top
+      if(top_topRight == 0){
+        top_topRight = 24;
+      }
+      top_topRight--;
+  
+      strip6.setPixelColor(bot_topRight, strip6.Color(0, 0, 255));         //ring haut gauche bot
       bot_topRight++;
    }
     strip2.show();                          //  Update strip 2(droite)
@@ -717,11 +913,31 @@ delay(wait);
       }
       revers_bot_right++;
     }
+    if(led2 == 1){
+      strip2.setPixelColor(revers_top_right, strip2.Color(255, 0, 0));         //ring droite top
+      revers_top_right--;
+      
+      strip2.setPixelColor(revers_bot_right, strip2.Color(255, 0, 0));         //ring droite bot
+      if(revers_bot_right == 24){
+        revers_bot_right = -1;
+      }
+      revers_bot_right++;
+    }
     if(led4 == 0){
       strip4.setPixelColor(revers_top_left, strip4.Color(0, 255, 0));         //ring gauche top
       revers_top_left++;
       
       strip4.setPixelColor(revers_bot_left, strip4.Color(0, 255, 0));         //  ring gauche bot
+      if(revers_bot_left == 0){
+        revers_bot_left = 24;
+      }
+      revers_bot_left--;
+    }
+    if(led4 == 1){
+      strip4.setPixelColor(revers_top_left, strip4.Color(255, 0, 0));         //ring gauche top
+      revers_top_left++;
+      
+      strip4.setPixelColor(revers_bot_left, strip4.Color(255, 0, 0));         //  ring gauche bot
       if(revers_bot_left == 0){
         revers_bot_left = 24;
       }
@@ -737,6 +953,16 @@ delay(wait);
     }
     revers_bot_topLeft--;
   }
+  if(led5 == 1){
+    strip5.setPixelColor(revers_top_topLeft, strip5.Color(255, 0, 0));          //ring haut gauche top
+    revers_top_topLeft++;
+
+    strip5.setPixelColor(revers_bot_topLeft, strip5.Color(255,0 , 0));         //ring haut gauche bot
+    if(revers_bot_topLeft == 0){
+      revers_bot_topLeft = 24;
+    }
+    revers_bot_topLeft--;
+  }
   if(led6 == 0){
     strip6.setPixelColor(revers_top_topRight, strip6.Color(0, 255, 0));          //ring haut gauche top
     if(revers_top_topRight == 24){
@@ -747,6 +973,16 @@ delay(wait);
     strip6.setPixelColor(revers_bot_topRight, strip6.Color(0, 255, 0));         //ring haut gauche bot
     revers_bot_topRight--;
   }  
+  if(led6 == 1){
+    strip6.setPixelColor(revers_top_topRight, strip6.Color(255, 0, 0));          //ring haut gauche top
+    if(revers_top_topRight == 24){
+      revers_top_topRight = -1;
+    }
+    revers_top_topRight++;
+
+    strip6.setPixelColor(revers_bot_topRight, strip6.Color(255, 0, 0));         //ring haut gauche bot
+    revers_bot_topRight--;
+  } 
     strip2.show();                          //  Update strip to match
     strip4.show();
     strip5.show();                          //  Update strip 5(haut gauche)
@@ -808,6 +1044,16 @@ void wave4(int wait){
       }
       bot_right--;
     }  
+    if(led3 == 1){
+      strip3.setPixelColor(top_right, strip3.Color(0, 0, 255));         //ring droite top
+      top_right++;
+      
+      strip3.setPixelColor(bot_right, strip3.Color(0, 0, 255));         //ring droite bot
+      if(bot_right == 0){
+        bot_right = 24;
+      }
+      bot_right--;
+    } 
     
    if(led5 == 0){
       strip5.setPixelColor(top_topRight, strip5.Color(255, 0, 0));          //ring haut gauche top
@@ -817,6 +1063,16 @@ void wave4(int wait){
       top_topRight--;
   
       strip5.setPixelColor(bot_topRight, strip5.Color(255, 0, 0));         //ring haut gauche bot
+      bot_topRight++;
+   }
+   if(led5 == 1){
+      strip5.setPixelColor(top_topRight, strip5.Color(0, 0, 255));          //ring haut gauche top
+      if(top_topRight == 0){
+        top_topRight = 24;
+      }
+      top_topRight--;
+  
+      strip5.setPixelColor(bot_topRight, strip5.Color(0, 0, 255));         //ring haut gauche bot
       bot_topRight++;
    }
     
@@ -864,6 +1120,16 @@ delay(wait);
       }
       revers_bot_right++;
     }
+    if(led3 == 1){
+      strip3.setPixelColor(revers_top_right, strip3.Color(255, 0, 0));         //ring droite top
+      revers_top_right--;
+      
+      strip3.setPixelColor(revers_bot_right, strip3.Color(255, 0, 0));         //ring droite bot
+      if(revers_bot_right == 24){
+        revers_bot_right = -1;
+      }
+      revers_bot_right++;
+    }
   
   if(led5 == 0){
     strip5.setPixelColor(revers_top_topRight, strip5.Color(0, 255, 0));          //ring haut gauche top
@@ -874,7 +1140,17 @@ delay(wait);
 
     strip5.setPixelColor(revers_bot_topRight, strip5.Color(0, 255, 0));         //ring haut gauche bot
     revers_bot_topRight--;
-  }  
+  }
+  if(led5 == 1){
+    strip5.setPixelColor(revers_top_topRight, strip5.Color(255, 0, 0));          //ring haut gauche top
+    if(revers_top_topRight == 24){
+      revers_top_topRight = -1;
+    }
+    revers_top_topRight++;
+
+    strip5.setPixelColor(revers_bot_topRight, strip5.Color(255, 0, 0));         //ring haut gauche bot
+    revers_bot_topRight--;
+  }   
    
     strip3.show();                          //  Update strip 3(haut gauche)
     strip5.show();                          //  Update strip 5(haut droite)
@@ -943,6 +1219,16 @@ void wave5(int wait){
         bot_right = 24;
       }
       bot_right--;
+    }
+    if(led6 == 1){
+      strip6.setPixelColor(top_right, strip6.Color(0, 0, 255));         //ring droite top
+      top_right++;
+      
+      strip6.setPixelColor(bot_right, strip6.Color(0, 0, 255));         //ring droite bot
+      if(bot_right == 0){
+        bot_right = 24;
+      }
+      bot_right--;
     }  
    
    if(led9 == 0){
@@ -955,11 +1241,31 @@ void wave5(int wait){
       strip9.setPixelColor(bot_topRight, strip9.Color(255, 0, 0));         //ring haut droite bot
       bot_topRight++;
    }
+   if(led9 == 1){
+      strip9.setPixelColor(top_topRight, strip9.Color(0, 0, 255));          //ring haut droite top
+      if(top_topRight == 0){
+        top_topRight = 24;
+      }
+      top_topRight--;
+  
+      strip9.setPixelColor(bot_topRight, strip9.Color(0, 0, 255));         //ring haut droite bot
+      bot_topRight++;
+   }
    if(led3 == 0){
     strip3.setPixelColor(top_botRight, strip3.Color(255, 0, 0));          //ring bas droite top
       top_botRight++;
   
       strip3.setPixelColor(bot_botRight, strip3.Color(255, 0, 0));         //ring bas droite bot
+      if(bot_botRight == 0){
+        bot_botRight = 24;
+      }
+      bot_botRight--;
+   }
+   if(led3 == 1){
+    strip3.setPixelColor(top_botRight, strip3.Color(0, 0, 255));          //ring bas droite top
+      top_botRight++;
+  
+      strip3.setPixelColor(bot_botRight, strip3.Color(0, 0, 255));         //ring bas droite bot
       if(bot_botRight == 0){
         bot_botRight = 24;
       }
@@ -973,6 +1279,16 @@ void wave5(int wait){
       top_botLeft++;
   
       strip4.setPixelColor(bot_botLeft, strip4.Color(255, 0, 0));         //ring bas gauche bot
+      bot_botLeft--;
+   }
+   if(led4 == 1){
+    strip4.setPixelColor(top_botLeft, strip4.Color(0, 0, 255));          //ring bas gauche top
+    if(top_botLeft == 24){
+        top_botLeft = -1;
+      }
+      top_botLeft++;
+  
+      strip4.setPixelColor(bot_botLeft, strip4.Color(0, 0, 255));         //ring bas gauche bot
       bot_botLeft--;
    }
     strip6.show();                          
@@ -1032,6 +1348,16 @@ delay(wait);
       }
       revers_bot_right++;
     }
+    if(led6 == 1){
+      strip6.setPixelColor(revers_top_right, strip6.Color(255, 0, 0));         //ring droite top
+      revers_top_right--;
+      
+      strip6.setPixelColor(revers_bot_right, strip6.Color(255, 0, 0));         //ring droite bot
+      if(revers_bot_right == 24){
+        revers_bot_right = -1;
+      }
+      revers_bot_right++;
+    }
   if(led9 == 0){
     strip9.setPixelColor(revers_top_topRight, strip9.Color(0, 255, 0));          //ring haut droite top
     if(revers_top_topRight == 24){
@@ -1042,11 +1368,31 @@ delay(wait);
     strip9.setPixelColor(revers_bot_topRight, strip9.Color(0, 255, 0));         //ring haut droite bot
     revers_bot_topRight--;
   }  
+  if(led9 == 1){
+    strip9.setPixelColor(revers_top_topRight, strip9.Color(255, 0, 0));          //ring haut droite top
+    if(revers_top_topRight == 24){
+      revers_top_topRight = -1;
+    }
+    revers_top_topRight++;
+
+    strip9.setPixelColor(revers_bot_topRight, strip9.Color(255, 0, 0));         //ring haut droite bot
+    revers_bot_topRight--;
+  }
   if(led3 == 0){
     strip3.setPixelColor(revers_top_botRight, strip3.Color(0, 255, 0));          //ring bas droite top
       revers_top_botRight--;
   
       strip3.setPixelColor(revers_bot_botRight, strip3.Color(0, 255, 0));         //ring bas droite bot
+       if( revers_bot_botRight == 24){
+         revers_bot_botRight = -1;
+      }
+      revers_bot_botRight++;
+   }
+   if(led3 == 1){
+    strip3.setPixelColor(revers_top_botRight, strip3.Color(255, 0, 0));          //ring bas droite top
+      revers_top_botRight--;
+  
+      strip3.setPixelColor(revers_bot_botRight, strip3.Color(255, 0, 0));         //ring bas droite bot
        if( revers_bot_botRight == 24){
          revers_bot_botRight = -1;
       }
@@ -1060,6 +1406,16 @@ delay(wait);
       revers_top_botLeft--;
   
       strip4.setPixelColor(revers_bot_botLeft, strip4.Color(0, 255, 0));         //ring bas gauche bot
+      revers_bot_botLeft++;
+   }
+   if(led4 == 1){
+    strip4.setPixelColor(revers_top_botLeft, strip4.Color(255, 0, 0));          //ring bas gauche top
+    if(revers_top_botLeft == 0){
+        revers_top_botLeft = 24;
+      }
+      revers_top_botLeft--;
+  
+      strip4.setPixelColor(revers_bot_botLeft, strip4.Color(255, 0, 0));         //ring bas gauche bot
       revers_bot_botLeft++;
    }
     strip6.show();                          //  Update strip to match
@@ -1136,12 +1492,32 @@ delay(wait);
         bot_right = 24;
       }
       bot_right--;
-    }  
+    } 
+    if(led7 == 1){
+      strip7.setPixelColor(top_right, strip7.Color(0, 0, 255));         //ring droite top
+      top_right++;
+      
+      strip7.setPixelColor(bot_right, strip7.Color(0, 0, 255));         //ring droite bot
+      if(bot_right == 0){
+        bot_right = 24;
+      }
+      bot_right--;
+    } 
     if(led5 == 0){
       strip5.setPixelColor(top_left, strip5.Color(255, 0, 0));          //ring gauche top
       top_left--;
   
        strip5.setPixelColor(bot_left, strip5.Color(255, 0, 0));         //ring gauche bot
+      if(bot_left == 24){
+        bot_left = -1;
+      }
+      bot_left++;
+    }
+    if(led5 == 1){
+      strip5.setPixelColor(top_left, strip5.Color(0, 0, 255));          //ring gauche top
+      top_left--;
+  
+       strip5.setPixelColor(bot_left, strip5.Color(0, 0, 255));         //ring gauche bot
       if(bot_left == 24){
         bot_left = -1;
       }
@@ -1158,6 +1534,16 @@ delay(wait);
       }
       bot_topLeft++;
    }
+   if(led9 == 1){
+      strip9.setPixelColor(top_topLeft, strip9.Color(0, 0, 255));          //ring haut gauche top
+      top_topLeft--;
+  
+      strip9.setPixelColor(bot_topLeft, strip9.Color(0, 0, 255));         //ring haut gauche bot
+      if(bot_topLeft == 24){
+        bot_topLeft = -1;
+      }
+      bot_topLeft++;
+   }
    
    if(led8 == 0){
       strip8.setPixelColor(top_topRight, strip8.Color(255, 0, 0));          //ring haut droite top
@@ -1169,11 +1555,31 @@ delay(wait);
       strip8.setPixelColor(bot_topRight, strip8.Color(255, 0, 0));         //ring haut droite bot
       bot_topRight++;
    }
+   if(led8 == 1){
+      strip8.setPixelColor(top_topRight, strip8.Color(0, 0, 255));          //ring haut droite top
+      if(top_topRight == 0){
+        top_topRight = 24;
+      }
+      top_topRight--;
+  
+      strip8.setPixelColor(bot_topRight, strip8.Color(0, 0, 255));         //ring haut droite bot
+      bot_topRight++;
+   }
    if(led2 == 0){
     strip2.setPixelColor(top_botRight, strip2.Color(255, 0, 0));          //ring bas droite top
       top_botRight++;
   
       strip2.setPixelColor(bot_botRight, strip2.Color(255, 0, 0));         //ring bas droite bot
+      if(bot_botRight == 0){
+        bot_botRight = 24;
+      }
+      bot_botRight--;
+   }
+   if(led2 == 1){
+    strip2.setPixelColor(top_botRight, strip2.Color(0, 0, 255));          //ring bas droite top
+      top_botRight++;
+  
+      strip2.setPixelColor(bot_botRight, strip2.Color(0, 0, 255));         //ring bas droite bot
       if(bot_botRight == 0){
         bot_botRight = 24;
       }
@@ -1187,6 +1593,16 @@ delay(wait);
       top_botLeft++;
   
       strip3.setPixelColor(bot_botLeft, strip3.Color(255, 0, 0));         //ring bas gauche bot
+      bot_botLeft--;
+   }
+   if(led3 == 1){
+    strip3.setPixelColor(top_botLeft, strip3.Color(0, 0, 255));          //ring bas gauche top
+    if(top_botLeft == 24){
+        top_botLeft = -1;
+      }
+      top_botLeft++;
+  
+      strip3.setPixelColor(bot_botLeft, strip3.Color(0, 0, 255));         //ring bas gauche bot
       bot_botLeft--;
    }
     strip5.show();                          
@@ -1256,11 +1672,31 @@ delay(wait);
       }
       revers_bot_right++;
     }
+    if(led7 == 1){
+      strip7.setPixelColor(revers_top_right, strip7.Color(255, 0, 0));         //ring droite top
+      revers_top_right--;
+      
+      strip7.setPixelColor(revers_bot_right, strip7.Color(255, 0, 0));         //ring droite bot
+      if(revers_bot_right == 24){
+        revers_bot_right = -1;
+      }
+      revers_bot_right++;
+    }
     if(led5 == 0){
       strip5.setPixelColor(revers_top_left, strip5.Color(0, 255, 0));         //ring gauche top
       revers_top_left++;
       
       strip5.setPixelColor(revers_bot_left, strip5.Color(0, 255, 0));         //  ring gauche bot
+      if(revers_bot_left == 0){
+        revers_bot_left = 24;
+      }
+      revers_bot_left--;
+    }
+    if(led5 == 1){
+      strip5.setPixelColor(revers_top_left, strip5.Color(255, 0, 0));         //ring gauche top
+      revers_top_left++;
+      
+      strip5.setPixelColor(revers_bot_left, strip5.Color(255, 0, 0));         //  ring gauche bot
       if(revers_bot_left == 0){
         revers_bot_left = 24;
       }
@@ -1276,6 +1712,16 @@ delay(wait);
     }
     revers_bot_topLeft--;
   }
+  if(led9 == 1){
+    strip9.setPixelColor(revers_top_topLeft, strip9.Color(255, 0, 0));          //ring haut gauche top
+    revers_top_topLeft++;
+
+    strip9.setPixelColor(revers_bot_topLeft, strip9.Color(255, 0, 0));         //ring haut gauche bot
+    if(revers_bot_topLeft == 0){
+      revers_bot_topLeft = 24;
+    }
+    revers_bot_topLeft--;
+  }
   if(led8 == 0){
     strip8.setPixelColor(revers_top_topRight, strip8.Color(0, 255, 0));          //ring haut droite top
     if(revers_top_topRight == 24){
@@ -1286,11 +1732,31 @@ delay(wait);
     strip8.setPixelColor(revers_bot_topRight, strip8.Color(0, 255, 0));         //ring haut droite bot
     revers_bot_topRight--;
   }  
+  if(led8 == 1){
+    strip8.setPixelColor(revers_top_topRight, strip8.Color(255, 0, 0));          //ring haut droite top
+    if(revers_top_topRight == 24){
+      revers_top_topRight = -1;
+    }
+    revers_top_topRight++;
+
+    strip8.setPixelColor(revers_bot_topRight, strip8.Color(255, 0, 0));         //ring haut droite bot
+    revers_bot_topRight--;
+  }
   if(led2 == 0){
     strip2.setPixelColor(revers_top_botRight, strip2.Color(0, 255, 0));          //ring bas droite top
       revers_top_botRight--;
   
       strip2.setPixelColor(revers_bot_botRight, strip2.Color(0, 255, 0));         //ring bas droite bot
+       if( revers_bot_botRight == 24){
+         revers_bot_botRight = -1;
+      }
+      revers_bot_botRight++;
+   }
+   if(led2 == 1){
+    strip2.setPixelColor(revers_top_botRight, strip2.Color(255, 0, 0));          //ring bas droite top
+      revers_top_botRight--;
+  
+      strip2.setPixelColor(revers_bot_botRight, strip2.Color(255, 0, 0));         //ring bas droite bot
        if( revers_bot_botRight == 24){
          revers_bot_botRight = -1;
       }
@@ -1304,6 +1770,16 @@ delay(wait);
       revers_top_botLeft--;
   
       strip3.setPixelColor(revers_bot_botLeft, strip3.Color(0, 255, 0));         //ring bas gauche bot
+      revers_bot_botLeft++;
+   }
+   if(led3 == 1){
+    strip3.setPixelColor(revers_top_botLeft, strip3.Color(255, 0, 0));          //ring bas gauche top
+    if(revers_top_botLeft == 0){
+        revers_top_botLeft = 24;
+      }
+      revers_top_botLeft--;
+  
+      strip3.setPixelColor(revers_bot_botLeft, strip3.Color(255, 0, 0));         //ring bas gauche bot
       revers_bot_botLeft++;
    }
     strip5.show();                          //  Update strip to match
@@ -1378,12 +1854,32 @@ delay(wait);
       }
       bot_left++;
     }
+    if(led6 == 1){
+      strip6.setPixelColor(top_left, strip6.Color(0, 0, 255));          //ring gauche top
+      top_left--;
+  
+       strip6.setPixelColor(bot_left, strip6.Color(0, 0, 255));         //ring gauche bot
+      if(bot_left == 24){
+        bot_left = -1;
+      }
+      bot_left++;
+    }
     
    if(led8 == 0){
       strip8.setPixelColor(top_topLeft, strip8.Color(255, 0, 0));          //ring haut gauche top
       top_topLeft--;
   
       strip8.setPixelColor(bot_topLeft, strip8.Color(255, 0, 0));         //ring haut gauche bot
+      if(bot_topLeft == 24){
+        bot_topLeft = -1;
+      }
+      bot_topLeft++;
+   }
+   if(led8 == 1){
+      strip8.setPixelColor(top_topLeft, strip8.Color(0, 0, 255));          //ring haut gauche top
+      top_topLeft--;
+  
+      strip8.setPixelColor(bot_topLeft, strip8.Color(0, 0, 255));         //ring haut gauche bot
       if(bot_topLeft == 24){
         bot_topLeft = -1;
       }
@@ -1400,6 +1896,16 @@ delay(wait);
       }
       bot_botRight--;
    }
+   if(led1 == 1){
+    strip1.setPixelColor(top_botRight, strip1.Color(0, 0, 255));          //ring bas droite top
+      top_botRight++;
+  
+    strip1.setPixelColor(bot_botRight, strip1.Color(0, 0, 255));         //ring bas droite bot
+      if(bot_botRight == 0){
+        bot_botRight = 24;
+      }
+      bot_botRight--;
+   }
    if(led2 == 0){
     strip2.setPixelColor(top_botLeft, strip2.Color(255, 0, 0));          //ring bas gauche top
     if(top_botLeft == 24){
@@ -1408,6 +1914,16 @@ delay(wait);
       top_botLeft++;
   
       strip2.setPixelColor(bot_botLeft, strip2.Color(255, 0, 0));         //ring bas gauche bot
+      bot_botLeft--;
+   }
+   if(led2 == 1){
+    strip2.setPixelColor(top_botLeft, strip2.Color(0, 0, 255));          //ring bas gauche top
+    if(top_botLeft == 24){
+        top_botLeft = -1;
+      }
+      top_botLeft++;
+  
+      strip2.setPixelColor(bot_botLeft, strip2.Color(0, 0, 255));         //ring bas gauche bot
       bot_botLeft--;
    }
     strip6.show();                          
@@ -1467,6 +1983,16 @@ delay(wait);
       }
       revers_bot_left--;
     }
+    if(led6 == 1){
+      strip6.setPixelColor(revers_top_left, strip6.Color(255, 0, 0));         //ring gauche top
+      revers_top_left++;
+      
+      strip6.setPixelColor(revers_bot_left, strip6.Color(255, 0, 0));         //  ring gauche bot
+      if(revers_bot_left == 0){
+        revers_bot_left = 24;
+      }
+      revers_bot_left--;
+    }
   if(led8 == 0){
     strip8.setPixelColor(revers_top_topLeft, strip8.Color(0, 255, 0));          //ring haut gauche top
     revers_top_topLeft++;
@@ -1477,11 +2003,31 @@ delay(wait);
     }
     revers_bot_topLeft--;
   } 
+  if(led8 == 1){
+    strip8.setPixelColor(revers_top_topLeft, strip8.Color(255, 0, 0));          //ring haut gauche top
+    revers_top_topLeft++;
+
+    strip8.setPixelColor(revers_bot_topLeft, strip8.Color(255, 0, 0));         //ring haut gauche bot
+    if(revers_bot_topLeft == 0){
+      revers_bot_topLeft = 24;
+    }
+    revers_bot_topLeft--;
+  }
   if(led1 == 0){
     strip1.setPixelColor(revers_top_botRight, strip1.Color(0, 255, 0));          //ring bas droite top
       revers_top_botRight--;
   
       strip1.setPixelColor(revers_bot_botRight, strip1.Color(0, 255, 0));         //ring bas droite bot
+       if( revers_bot_botRight == 24){
+         revers_bot_botRight = -1;
+      }
+      revers_bot_botRight++;
+   }
+   if(led1 == 1){
+    strip1.setPixelColor(revers_top_botRight, strip1.Color(255, 0, 0));          //ring bas droite top
+      revers_top_botRight--;
+  
+      strip1.setPixelColor(revers_bot_botRight, strip1.Color(255, 0, 0));         //ring bas droite bot
        if( revers_bot_botRight == 24){
          revers_bot_botRight = -1;
       }
@@ -1495,6 +2041,16 @@ delay(wait);
       revers_top_botLeft--;
   
       strip2.setPixelColor(revers_bot_botLeft, strip2.Color(0, 255, 0));         //ring bas gauche bot
+      revers_bot_botLeft++;
+   }
+   if(led2 == 1){
+    strip2.setPixelColor(revers_top_botLeft, strip2.Color(255, 0, 0));          //ring bas gauche top
+    if(revers_top_botLeft == 0){
+        revers_top_botLeft = 24;
+      }
+      revers_top_botLeft--;
+  
+      strip2.setPixelColor(revers_bot_botLeft, strip2.Color(255, 0, 0));         //ring bas gauche bot
       revers_bot_botLeft++;
    }
     strip6.show();                          //  Update strip to match
@@ -1568,12 +2124,32 @@ delay(wait);
       }
       bot_left++;
     }
+    if(led9 == 1){
+      strip9.setPixelColor(top_left, strip9.Color(0, 0, 255));          //ring gauche top
+      top_left--;
+  
+       strip9.setPixelColor(bot_left, strip9.Color(0, 0, 255));         //ring gauche bot
+      if(bot_left == 24){
+        bot_left = -1;
+      }
+      bot_left++;
+    }
     
    if(led10 == 0){
       strip10.setPixelColor(top_topLeft, strip10.Color(255, 0, 0));          //ring haut gauche top
       top_topLeft--;
   
       strip10.setPixelColor(bot_topLeft, strip10.Color(255, 0, 0));         //ring haut gauche bot
+      if(bot_topLeft == 24){
+        bot_topLeft = -1;
+      }
+      bot_topLeft++;
+   }
+   if(led10 == 1){
+      strip10.setPixelColor(top_topLeft, strip10.Color(0, 0, 255));          //ring haut gauche top
+      top_topLeft--;
+  
+      strip10.setPixelColor(bot_topLeft, strip10.Color(0, 0, 255));         //ring haut gauche bot
       if(bot_topLeft == 24){
         bot_topLeft = -1;
       }
@@ -1590,6 +2166,16 @@ delay(wait);
       }
       bot_botRight--;
    }
+   if(led7 == 1){
+    strip7.setPixelColor(top_botRight, strip7.Color(0, 0, 255));          //ring bas droite top
+      top_botRight++;
+  
+      strip7.setPixelColor(bot_botRight, strip7.Color(0, 0, 255));         //ring bas droite bot
+      if(bot_botRight == 0){
+        bot_botRight = 24;
+      }
+      bot_botRight--;
+   }
    if(led6 == 0){
     strip6.setPixelColor(top_botLeft, strip6.Color(255, 0, 0));          //ring bas gauche top
     if(top_botLeft == 24){
@@ -1598,6 +2184,16 @@ delay(wait);
       top_botLeft++;
   
       strip6.setPixelColor(bot_botLeft, strip6.Color(255, 0, 0));         //ring bas gauche bot
+      bot_botLeft--;
+   }
+   if(led6 == 1){
+    strip6.setPixelColor(top_botLeft, strip6.Color(0, 0, 255));          //ring bas gauche top
+    if(top_botLeft == 24){
+        top_botLeft = -1;
+      }
+      top_botLeft++;
+  
+      strip6.setPixelColor(bot_botLeft, strip6.Color(0, 0, 255));         //ring bas gauche bot
       bot_botLeft--;
    }
     strip9.show();                          
@@ -1657,11 +2253,31 @@ delay(wait);
       }
       revers_bot_left--;
     }
+    if(led9 == 1){
+      strip9.setPixelColor(revers_top_left, strip9.Color(255, 0, 0));         //ring gauche top
+      revers_top_left++;
+      
+      strip9.setPixelColor(revers_bot_left, strip9.Color(255, 0, 0));         //  ring gauche bot
+      if(revers_bot_left == 0){
+        revers_bot_left = 24;
+      }
+      revers_bot_left--;
+    }
   if(led10 == 0){
     strip10.setPixelColor(revers_top_topLeft, strip10.Color(0, 255, 0));          //ring haut gauche top
     revers_top_topLeft++;
 
     strip10.setPixelColor(revers_bot_topLeft, strip10.Color(0, 255, 0));         //ring haut gauche bot
+    if(revers_bot_topLeft == 0){
+      revers_bot_topLeft = 24;
+    }
+    revers_bot_topLeft--;
+  } 
+  if(led10 == 1){
+    strip10.setPixelColor(revers_top_topLeft, strip10.Color(255, 0, 0));          //ring haut gauche top
+    revers_top_topLeft++;
+
+    strip10.setPixelColor(revers_bot_topLeft, strip10.Color(255, 0, 0));         //ring haut gauche bot
     if(revers_bot_topLeft == 0){
       revers_bot_topLeft = 24;
     }
@@ -1677,6 +2293,16 @@ delay(wait);
       }
       revers_bot_botRight++;
    }
+   if(led7 == 1){
+    strip7.setPixelColor(revers_top_botRight, strip7.Color(255, 0, 0));          //ring bas droite top
+      revers_top_botRight--;
+  
+      strip7.setPixelColor(revers_bot_botRight, strip7.Color(255, 0, 0));         //ring bas droite bot
+       if( revers_bot_botRight == 24){
+         revers_bot_botRight = -1;
+      }
+      revers_bot_botRight++;
+   }
    if(led6 == 0){
     strip6.setPixelColor(revers_top_botLeft, strip6.Color(0, 255, 0));          //ring bas gauche top
     if(revers_top_botLeft == 0){
@@ -1685,6 +2311,16 @@ delay(wait);
       revers_top_botLeft--;
   
       strip6.setPixelColor(revers_bot_botLeft, strip6.Color(0, 255, 0));         //ring bas gauche bot
+      revers_bot_botLeft++;
+   }
+   if(led6 == 1){
+    strip6.setPixelColor(revers_top_botLeft, strip6.Color(255, 0, 0));          //ring bas gauche top
+    if(revers_top_botLeft == 0){
+        revers_top_botLeft = 24;
+      }
+      revers_top_botLeft--;
+  
+      strip6.setPixelColor(revers_bot_botLeft, strip6.Color(255, 0, 0));         //ring bas gauche bot
       revers_bot_botLeft++;
    }
     strip9.show();                          //  Update strip to match
@@ -1756,6 +2392,16 @@ void wave9(int wait){
       }
       bot_right--;
     }  
+    if(led8 == 1){
+      strip8.setPixelColor(top_right, strip8.Color(0, 0, 255));         //ring droite top
+      top_right++;
+      
+      strip8.setPixelColor(bot_right, strip8.Color(0, 0, 255));         //ring droite bot
+      if(bot_right == 0){
+        bot_right = 24;
+      }
+      bot_right--;
+    }
    
    if(led10 == 0){
       strip10.setPixelColor(top_topRight, strip10.Color(255, 0, 0));          //ring haut droite top
@@ -1767,11 +2413,31 @@ void wave9(int wait){
       strip10.setPixelColor(bot_topRight, strip10.Color(255, 0, 0));         //ring haut droite bot
       bot_topRight++;
    }
+   if(led10 == 1){
+      strip10.setPixelColor(top_topRight, strip10.Color(0, 0, 255));          //ring haut droite top
+      if(top_topRight == 0){
+        top_topRight = 24;
+      }
+      top_topRight--;
+  
+      strip10.setPixelColor(bot_topRight, strip10.Color(0, 0, 255));         //ring haut droite bot
+      bot_topRight++;
+   }
    if(led6 == 0){
     strip6.setPixelColor(top_botRight, strip6.Color(255, 0, 0));          //ring bas droite top
       top_botRight++;
   
       strip6.setPixelColor(bot_botRight, strip6.Color(255, 0, 0));         //ring bas droite bot
+      if(bot_botRight == 0){
+        bot_botRight = 24;
+      }
+      bot_botRight--;
+   }
+   if(led6 == 1){
+    strip6.setPixelColor(top_botRight, strip6.Color(0, 0, 255));          //ring bas droite top
+      top_botRight++;
+  
+      strip6.setPixelColor(bot_botRight, strip6.Color(0, 0, 255));         //ring bas droite bot
       if(bot_botRight == 0){
         bot_botRight = 24;
       }
@@ -1785,6 +2451,16 @@ void wave9(int wait){
       top_botLeft++;
   
       strip5.setPixelColor(bot_botLeft, strip5.Color(255, 0, 0));         //ring bas gauche bot
+      bot_botLeft--;
+   }
+   if(led5 == 1){
+    strip5.setPixelColor(top_botLeft, strip5.Color(0, 0, 255));          //ring bas gauche top
+    if(top_botLeft == 24){
+        top_botLeft = -1;
+      }
+      top_botLeft++;
+  
+      strip5.setPixelColor(bot_botLeft, strip5.Color(0, 0, 255));         //ring bas gauche bot
       bot_botLeft--;
    }
     strip8.show();                          
@@ -1844,6 +2520,16 @@ delay(wait);
       }
       revers_bot_right++;
     }
+    if(led8 == 1){
+      strip8.setPixelColor(revers_top_right, strip8.Color(255, 0, 0));         //ring droite top
+      revers_top_right--;
+      
+      strip8.setPixelColor(revers_bot_right, strip8.Color(255, 0, 0));         //ring droite bot
+      if(revers_bot_right == 24){
+        revers_bot_right = -1;
+      }
+      revers_bot_right++;
+    }
   if(led10 == 0){
     strip10.setPixelColor(revers_top_topRight, strip10.Color(0, 255, 0));          //ring haut droite top
     if(revers_top_topRight == 24){
@@ -1853,12 +2539,32 @@ delay(wait);
 
     strip10.setPixelColor(revers_bot_topRight, strip10.Color(0, 255, 0));         //ring haut droite bot
     revers_bot_topRight--;
+  }
+  if(led10 == 1){
+    strip10.setPixelColor(revers_top_topRight, strip10.Color(255, 0, 0));          //ring haut droite top
+    if(revers_top_topRight == 24){
+      revers_top_topRight = -1;
+    }
+    revers_top_topRight++;
+
+    strip10.setPixelColor(revers_bot_topRight, strip10.Color(255, 0, 0));         //ring haut droite bot
+    revers_bot_topRight--;
   }  
   if(led6 == 0){
     strip6.setPixelColor(revers_top_botRight, strip6.Color(0, 255, 0));          //ring bas droite top
       revers_top_botRight--;
   
       strip6.setPixelColor(revers_bot_botRight, strip6.Color(0, 255, 0));         //ring bas droite bot
+       if( revers_bot_botRight == 24){
+         revers_bot_botRight = -1;
+      }
+      revers_bot_botRight++;
+   }
+   if(led6 == 1){
+    strip6.setPixelColor(revers_top_botRight, strip6.Color(255, 0, 0));          //ring bas droite top
+      revers_top_botRight--;
+  
+      strip6.setPixelColor(revers_bot_botRight, strip6.Color(255, 0, 0));         //ring bas droite bot
        if( revers_bot_botRight == 24){
          revers_bot_botRight = -1;
       }
@@ -1872,6 +2578,16 @@ delay(wait);
       revers_top_botLeft--;
   
       strip5.setPixelColor(revers_bot_botLeft, strip5.Color(0, 255, 0));         //ring bas gauche bot
+      revers_bot_botLeft++;
+   }
+   if(led5 == 1){
+    strip5.setPixelColor(revers_top_botLeft, strip5.Color(255, 0, 0));          //ring bas gauche top
+    if(revers_top_botLeft == 0){
+        revers_top_botLeft = 24;
+      }
+      revers_top_botLeft--;
+  
+      strip5.setPixelColor(revers_bot_botLeft, strip5.Color(255, 0, 0));         //ring bas gauche bot
       revers_bot_botLeft++;
    }
     strip8.show();                          //  Update strip to match
@@ -1935,6 +2651,16 @@ delay(wait);
       }
       bot_botRight--;
    }
+   if(led8 == 1){
+    strip8.setPixelColor(top_botRight, strip8.Color(0, 0, 255));          //ring bas droite top
+      top_botRight++;
+  
+      strip8.setPixelColor(bot_botRight, strip8.Color(0, 0, 255));         //ring bas droite bot
+      if(bot_botRight == 0){
+        bot_botRight = 24;
+      }
+      bot_botRight--;
+   }
    if(led9 == 0){
     strip9.setPixelColor(top_botLeft, strip9.Color(255, 0, 0));          //ring bas gauche top
     if(top_botLeft == 24){
@@ -1943,6 +2669,16 @@ delay(wait);
       top_botLeft++;
   
       strip9.setPixelColor(bot_botLeft, strip9.Color(255, 0, 0));         //ring bas gauche bot
+      bot_botLeft--;
+   }
+   if(led9 == 1){
+    strip9.setPixelColor(top_botLeft, strip9.Color(0, 0, 255));          //ring bas gauche top
+    if(top_botLeft == 24){
+        top_botLeft = -1;
+      }
+      top_botLeft++;
+  
+      strip9.setPixelColor(bot_botLeft, strip9.Color(0, 0, 255));         //ring bas gauche bot
       bot_botLeft--;
    }
     strip8.show();                          
@@ -1991,6 +2727,16 @@ delay(wait);
         }
         revers_bot_botRight++;
     }
+    if(led8 == 1){
+      strip8.setPixelColor(revers_top_botRight, strip8.Color(255, 0, 0));          //ring bas droite top
+        revers_top_botRight--;
+    
+        strip8.setPixelColor(revers_bot_botRight, strip8.Color(255, 0, 0));         //ring bas droite bot
+         if( revers_bot_botRight == 24){
+           revers_bot_botRight = -1;
+        }
+        revers_bot_botRight++;
+    }
     if(led9 == 0){
       strip9.setPixelColor(revers_top_botLeft, strip9.Color(0, 255, 0));          //ring bas gauche top
       if(revers_top_botLeft == 0){
@@ -1999,6 +2745,16 @@ delay(wait);
         revers_top_botLeft--;
     
         strip9.setPixelColor(revers_bot_botLeft, strip9.Color(0, 255, 0));         //ring bas gauche bot
+        revers_bot_botLeft++;
+   }
+   if(led9 == 1){
+      strip9.setPixelColor(revers_top_botLeft, strip9.Color(255, 0, 0));          //ring bas gauche top
+      if(revers_top_botLeft == 0){
+          revers_top_botLeft = 24;
+        }
+        revers_top_botLeft--;
+    
+        strip9.setPixelColor(revers_bot_botLeft, strip9.Color(255, 0, 0));         //ring bas gauche bot
         revers_bot_botLeft++;
    }
     strip8.show();                          //  Update strip to match
