@@ -188,9 +188,10 @@ void loop() {
       strip9.clear();
       strip10.clear();
 
+      rainbowRoad(50);
       // The first NeoPixel in a strand is #0, second is 1, all the way up
       // to the count of pixels minus one.
-
+      
 
       for (int i = 0; i < NUMPIXELS; i++) { // Finit couleurs des bandeaux
 
@@ -267,14 +268,13 @@ void loop() {
         }
         
       }
-/* test sans le strip 5 car cassé !!!
+
       if (digitalRead(PIR_PIN5) == HIGH && led5 == 0) { //le capteur détecte un mouvement
         Serial.println("mouvement detecte 5 ");
         wave5(30);
         led5 = 1;
         triangle_game = 1;
       }
-*/
       if (digitalRead(PIR_PIN6) == HIGH && led6 == 0) { //le capteur détecte un mouvement
         Serial.println("mouvement detecte 6 ");
         wave6(30);
@@ -4333,22 +4333,49 @@ delay(wait);
 
 
   // Rainbow-enhanced theater marquee. Pass delay time (in ms) between frames.
-  void theaterChaseRainbow(int led_pin, int wait) {
-    Adafruit_NeoPixel strip = Adafruit_NeoPixel(NUMPIXELS, led_pin, NEO_GRB + NEO_KHZ800);
+  void rainbowRoad(int wait) {
   int firstPixelHue = 0;     // First pixel starts at red (hue 0)
   for(int a=0; a<30; a++) {  // Repeat 30 times...
     for(int b=0; b<3; b++) { //  'b' counts from 0 to 2...
-      strip.clear();         //   Set all pixels in RAM to 0 (off)
+      strip1.clear();         //   Set all pixels in RAM to 0 (off)
+      strip2.clear();
+      strip3.clear();
+      strip4.clear();
+      strip5.clear();
+      strip6.clear();
+      strip7.clear();
+      strip8.clear();
+      strip9.clear();
+      strip10.clear();
       // 'c' counts up from 'b' to end of strip in increments of 3...
-      for(int c=b; c<strip.numPixels(); c += 3) {
+      for(int c=b; c<strip1.numPixels(); c += 3) {
         // hue of pixel 'c' is offset by an amount to make one full
         // revolution of the color wheel (range 65536) along the length
         // of the strip (strip.numPixels() steps):
-        int      hue   = firstPixelHue + c * 65536L / strip.numPixels();
-        uint32_t color = strip.gamma32(strip.ColorHSV(hue)); // hue -> RGB
-        strip.setPixelColor(c, color); // Set pixel 'c' to value 'color'
+        int      hue   = firstPixelHue + c * 65536L / strip1.numPixels();
+        uint32_t color = strip1.gamma32(strip1.ColorHSV(hue)); // hue -> RGB
+        strip1.setPixelColor(c, color); // Set pixel 'c' to value 'color'
+        strip2.setPixelColor(c, color); // Set pixel 'c' to value 'color'
+        strip3.setPixelColor(c, color); // Set pixel 'c' to value 'color'
+        strip4.setPixelColor(c, color); // Set pixel 'c' to value 'color'
+        strip5.setPixelColor(c, color); // Set pixel 'c' to value 'color'
+        strip6.setPixelColor(c, color); // Set pixel 'c' to value 'color'
+        strip7.setPixelColor(c, color); // Set pixel 'c' to value 'color'
+        strip8.setPixelColor(c, color); // Set pixel 'c' to value 'color'
+        strip9.setPixelColor(c, color); // Set pixel 'c' to value 'color'
+        strip10.setPixelColor(c, color); // Set pixel 'c' to value 'color'
+        
       }
-      strip.show();                // Update strip with new contents
+      strip1.show();                // Update strip with new contents
+      strip2.show();
+      strip3.show();
+      strip4.show();
+      strip5.show();
+      strip6.show();
+      strip7.show();
+      strip8.show();
+      strip9.show();
+      strip10.show();
       delay(wait);                 // Pause for a moment
       firstPixelHue += 65536 / 90; // One cycle of color wheel over 90 frames
     }
