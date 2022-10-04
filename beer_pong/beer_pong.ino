@@ -31,10 +31,21 @@
 #define PIR_PIN9        38
 #define PIR_PIN10       40
 
+#define RPHOTO_1        A1 
+#define RPHOTO_2        A2 
+#define RPHOTO_3        A3
+#define RPHOTO_4        A4
+#define RPHOTO_5        A7 
+#define RPHOTO_6        A6
+#define RPHOTO_7        A5  
+#define RPHOTO_8        A9  
+#define RPHOTO_9        A8
+#define RPHOTO_10        A10 
 // How many NeoPixels are attached to the Arduino?
 #define NUMPIXELS 24 // Popular NeoPixel ring size
 
-
+#define PAUSE_R         20000
+#define VALUE_RESET     30
 
 Adafruit_NeoPixel strip1 = Adafruit_NeoPixel(NUMPIXELS, LED_PIN1, NEO_GRB + NEO_KHZ800);
 Adafruit_NeoPixel strip2 = Adafruit_NeoPixel(NUMPIXELS, LED_PIN2, NEO_GRB + NEO_KHZ800);
@@ -66,6 +77,7 @@ Adafruit_NeoPixel strip10 = Adafruit_NeoPixel(NUMPIXELS, LED_PIN10, NEO_GRB + NE
 enum {
   INIT,
   WAIT_BALL,
+  WAIT_RESISTANCE,
   TRIANGLE_GAME_1,
   TRIANGLE_GAME_4,
   TRIANGLE_GAME_10,
@@ -122,7 +134,7 @@ uint32_t color_strip10_blue = strip10.Color(0, 0, 255);
 
 
 void setup() {
-//Serial.begin(9600); 
+Serial.begin(9600); 
 
   // These lines are specifically to support the Adafruit Trinket 5V 16 MHz.
   // Any other board, you can remove this part (but no harm leaving it):
@@ -228,1587 +240,251 @@ void loop() {
       break;
 
     case WAIT_BALL:
-      Serial.println("WAIT_BALL");
+      //Serial.println("WAIT_BALL");
 
       if (digitalRead(PIR_PIN1) == HIGH && led1 == 0) { //le capteur détecte un mouvement
         Serial.println("mouvement detecte 1 ");
-        
-        if( triangle_game == 0){
-          state = TRIANGLE_GAME_1;
-        }else{
           wave1(30);
-          led1 = 1;
-        }
-        
+          int value_RPHOTO_1 = analogRead(RPHOTO_1); //on récupère la valeur de la résisantce 
+          Serial.println(value_RPHOTO_1);
+          delay(PAUSE_R); // attente de x sec 
+          int value_RPHOTO_2 = analogRead(RPHOTO_1); //on récupère la valeur de la résisantce 
+          Serial.println(value_RPHOTO_2);
+          int value = value_RPHOTO_2 - value_RPHOTO_1;
+          Serial.println(value);
+          
+          if(value < VALUE_RESET){ //sinon on reset la couleur au vert
+            for (int i = 0; i < NUMPIXELS; i++) { 
+            strip1.setPixelColor(i, color_strip1_green);
+            strip1.show();
+            delay(DELAYVAL); 
+            }
+            led1 = 0;
+          }else{
+            led1 = 1;
+          }
       }
 
       if (digitalRead(PIR_PIN2) == HIGH && led2 == 0) { //le capteur détecte un mouvement
         Serial.println("mouvement detecte 2 ");
-        strip2.clear();
         wave2(30);
-        led2 = 1;
-        triangle_game = 1;
+        int value_RPHOTO_1 = analogRead(RPHOTO_2); //on récupère la valeur de la résisantce 
+        Serial.println(value_RPHOTO_1);
+        delay(PAUSE_R); // attente de x sec 
+        int value_RPHOTO_2 = analogRead(RPHOTO_2); //on récupère la valeur de la résisantce 
+        Serial.println(value_RPHOTO_2);
+        int value = value_RPHOTO_2 - value_RPHOTO_1;
+        Serial.println(value);
+        
+        if(value < VALUE_RESET){ //sinon on reset la couleur au vert
+          for (int i = 0; i < NUMPIXELS; i++) { 
+          strip2.setPixelColor(i, color_strip2_green);
+          strip2.show();
+          delay(DELAYVAL); 
+          }
+          led2 = 0;
+        }else{
+          led2 = 1;
+          triangle_game = 1;
+        }
+                
       }
 
       if (digitalRead(PIR_PIN3) == HIGH && led3 == 0) { //le capteur détecte un mouvement
         Serial.println("mouvement detecte 3 ");
         wave3(30);
-        led3 = 1;
-        triangle_game = 1;
+        int value_RPHOTO_1 = analogRead(RPHOTO_3); //on récupère la valeur de la résisantce 
+        Serial.println(value_RPHOTO_1);
+        delay(PAUSE_R); // attente de x sec 
+        int value_RPHOTO_2 = analogRead(RPHOTO_3); //on récupère la valeur de la résisantce 
+        Serial.println(value_RPHOTO_2);
+        int value = value_RPHOTO_2 - value_RPHOTO_1;
+        Serial.println(value);
+        
+        if(value < VALUE_RESET){ //sinon on reset la couleur au vert
+          for (int i = 0; i < NUMPIXELS; i++) { 
+          strip3.setPixelColor(i, color_strip3_green);
+          strip3.show();
+          delay(DELAYVAL); 
+          }
+          led3 = 0;
+        }else{
+          led3 = 1;
+          triangle_game = 1;
+        }
+        
+        
       }
 
       if (digitalRead(PIR_PIN4) == HIGH && led4 == 0) { //le capteur détecte un mouvement
-        Serial.println("mouvement detecte 4 ");
-        
-        if( triangle_game == 0){
-          state = TRIANGLE_GAME_4;
-        }else{
+         Serial.println("mouvement detecte 4 ");
           wave4(30);
-          led4 = 1;
-        }
-        
+          int value_RPHOTO_1 = analogRead(RPHOTO_4); //on récupère la valeur de la résisantce 
+          Serial.println(value_RPHOTO_1);
+          delay(PAUSE_R); // attente de x sec 
+          int value_RPHOTO_2 = analogRead(RPHOTO_4); //on récupère la valeur de la résisantce 
+          Serial.println(value_RPHOTO_2);
+          int value = value_RPHOTO_2 - value_RPHOTO_1;
+          Serial.println(value);
+          
+          if(value < VALUE_RESET){ //sinon on reset la couleur au vert
+            for (int i = 0; i < NUMPIXELS; i++) { 
+            strip4.setPixelColor(i, color_strip4_green);
+            strip4.show();
+            delay(DELAYVAL); 
+            }
+            led4 = 0;
+          }else{
+            led4 = 1;
+          }
+
       }
 
       if (digitalRead(PIR_PIN5) == HIGH && led5 == 0) { //le capteur détecte un mouvement
         Serial.println("mouvement detecte 5 ");
         wave5(30);
-        led5 = 1;
-        triangle_game = 1;
+         int value_RPHOTO_1 = analogRead(RPHOTO_5); //on récupère la valeur de la résisantce 
+        Serial.println(value_RPHOTO_1);
+        delay(PAUSE_R); // attente de x sec 
+        int value_RPHOTO_2 = analogRead(RPHOTO_5); //on récupère la valeur de la résisantce 
+        Serial.println(value_RPHOTO_2);
+        int value = value_RPHOTO_2 - value_RPHOTO_1;
+        Serial.println(value);
+        
+        if(value < VALUE_RESET){ //sinon on reset la couleur au vert
+          for (int i = 0; i < NUMPIXELS; i++) { 
+          strip5.setPixelColor(i, color_strip5_green);
+          strip5.show();
+          delay(DELAYVAL); 
+          }
+          led5 = 0;
+        }else{
+          led5 = 1;
+          triangle_game = 1;
+        }
       }
       if (digitalRead(PIR_PIN6) == HIGH && led6 == 0) { //le capteur détecte un mouvement
         Serial.println("mouvement detecte 6 ");
         wave6(30);
-        led6 = 1;
-        triangle_game = 1;
+        int value_RPHOTO_1 = analogRead(RPHOTO_6); //on récupère la valeur de la résisantce 
+        Serial.println(value_RPHOTO_1);
+        delay(PAUSE_R); // attente de x sec 
+        int value_RPHOTO_2 = analogRead(RPHOTO_6); //on récupère la valeur de la résisantce 
+        Serial.println(value_RPHOTO_2);
+        int value = value_RPHOTO_2 - value_RPHOTO_1;
+        Serial.println(value);
+        
+        if(value < VALUE_RESET){ //sinon on reset la couleur au vert
+          for (int i = 0; i < NUMPIXELS; i++) { 
+          strip6.setPixelColor(i, color_strip6_green);
+          strip6.show();
+          delay(DELAYVAL); 
+          }
+          led6 = 0;
+        }else{
+          led6 = 1;
+          triangle_game = 1;
+        }
       }
 
       if (digitalRead(PIR_PIN7) == HIGH && led7 == 0) { //le capteur détecte un mouvement
         Serial.println("mouvement detecte 7 ");
         wave7(30);
-        led7 = 1;
-        triangle_game = 1;
+         int value_RPHOTO_1 = analogRead(RPHOTO_7); //on récupère la valeur de la résisantce 
+          Serial.println(value_RPHOTO_1);
+          delay(PAUSE_R); // attente de x sec 
+          int value_RPHOTO_2 = analogRead(RPHOTO_7); //on récupère la valeur de la résisantce 
+          Serial.println(value_RPHOTO_2);
+          int value = value_RPHOTO_2 - value_RPHOTO_1;
+          Serial.println(value);
+          
+          if(value < VALUE_RESET){ //sinon on reset la couleur au vert
+            for (int i = 0; i < NUMPIXELS; i++) { 
+            strip7.setPixelColor(i, color_strip7_green);
+            strip7.show();
+            delay(DELAYVAL); 
+            }
+            led7 = 0;
+          }else{
+            led7 = 1;
+            triangle_game = 1;
+          }
       }
 
       if (digitalRead(PIR_PIN8) == HIGH && led8 == 0) { //le capteur détecte un mouvement
         Serial.println("mouvement detecte 8 ");
         wave8(30);
-        led8 = 1;
-        triangle_game = 1;
+        int value_RPHOTO_1 = analogRead(RPHOTO_8); //on récupère la valeur de la résisantce 
+        Serial.println(value_RPHOTO_1);
+        delay(PAUSE_R); // attente de x sec 
+        int value_RPHOTO_2 = analogRead(RPHOTO_8); //on récupère la valeur de la résisantce 
+        Serial.println(value_RPHOTO_2);
+        int value = value_RPHOTO_2 - value_RPHOTO_1;
+        Serial.println(value);
+        
+        if(value < VALUE_RESET){ //sinon on reset la couleur au vert
+          for (int i = 0; i < NUMPIXELS; i++) { 
+          strip8.setPixelColor(i, color_strip8_green);
+          strip8.show();
+          delay(DELAYVAL); 
+          }
+          led8 = 0;
+        }else{
+          led8 = 1;
+          triangle_game = 1;
+        }
       }
 
       if (digitalRead(PIR_PIN9) == HIGH && led9 == 0) { //le capteur détecte un mouvement
         Serial.println("mouvement detecte 9 ");
         wave9(30);
-        led9 = 1;
-        triangle_game = 1;
+        int value_RPHOTO_1 = analogRead(RPHOTO_9); //on récupère la valeur de la résisantce 
+        Serial.println(value_RPHOTO_1);
+        delay(PAUSE_R); // attente de x sec 
+        int value_RPHOTO_2 = analogRead(RPHOTO_9); //on récupère la valeur de la résisantce 
+        Serial.println(value_RPHOTO_2);
+        int value = value_RPHOTO_2 - value_RPHOTO_1;
+        Serial.println(value);
+        
+        if(value < VALUE_RESET){ //sinon on reset la couleur au vert
+          for (int i = 0; i < NUMPIXELS; i++) { 
+          strip9.setPixelColor(i, color_strip9_green);
+          strip9.show();
+          delay(DELAYVAL); 
+          }
+          led9 = 0;
+        }else{
+          led9 = 1;
+          triangle_game = 1;
+        }
       }
 
       if (digitalRead(PIR_PIN10) == HIGH && led10 == 0) { //le capteur détecte un mouvement
         Serial.println("mouvement detecte 10 ");
-        if( triangle_game == 0){
-          state = TRIANGLE_GAME_10;
-        }else{
           wave10(30);
-          led10 = 1;
-        }
-        
+          int value_RPHOTO_1 = analogRead(RPHOTO_10); //on récupère la valeur de la résisantce 
+          Serial.println(value_RPHOTO_1);
+          delay(PAUSE_R); // attente de x sec 
+          int value_RPHOTO_2 = analogRead(RPHOTO_10); //on récupère la valeur de la résisantce 
+          Serial.println(value_RPHOTO_2);
+          int value = value_RPHOTO_2 - value_RPHOTO_1;
+          Serial.println(value);
+          
+          if(value < VALUE_RESET){ //sinon on reset la couleur au vert
+            for (int i = 0; i < NUMPIXELS; i++) { 
+            strip10.setPixelColor(i, color_strip10_green);
+            strip10.show();
+            delay(DELAYVAL); 
+            }
+            led10 = 0;
+          }else{
+            led10 = 1;
+          }
       }
 
       break;
-    /*****************************************************************     1     *******************************************************************************************************/
-    case TRIANGLE_GAME_1:
-    
-      //test sans le strip 5 car cassé !!!
-       if(digitalRead(PIR_PIN2) == HIGH || digitalRead(PIR_PIN3) == HIGH || digitalRead(PIR_PIN6) == HIGH || digitalRead(PIR_PIN7) == HIGH || digitalRead(PIR_PIN8) == HIGH || digitalRead(PIR_PIN9) == HIGH ){
-        if(led4 == 1){
-          for (int i = 0; i < NUMPIXELS; i++) {
-          strip10.setPixelColor(i, strip10.Color(0, 255, 0));
-          strip9.setPixelColor(i, strip9.Color(0, 255, 0));
-          strip8.setPixelColor(i, strip8.Color(0, 255, 0));
-          strip7.setPixelColor(i, strip7.Color(0, 255, 0));
-          strip6.setPixelColor(i, strip6.Color(0, 255, 0));
-          strip5.setPixelColor(i, strip5.Color(0, 255, 0));
-          strip10.show();
-          strip9.show();
-          strip8.show();
-          strip7.show();
-          strip6.show();
-          strip5.show();
-         }
-         triangle_game = 1;
-         state = WAIT_BALL;  
-        }else if(led10 == 1){
-          for (int i = 0; i < NUMPIXELS; i++) {
-            strip9.setPixelColor(i, strip9.Color(0, 255, 0));
-            strip6.setPixelColor(i, strip6.Color(0, 255, 0));
-            strip5.setPixelColor(i, strip5.Color(0, 255, 0));
-            strip4.setPixelColor(i, strip4.Color(0, 255, 0));
-            strip3.setPixelColor(i, strip3.Color(0, 255, 0));
-            strip2.setPixelColor(i, strip2.Color(0, 255, 0));
-            strip9.show();
-            strip6.show();
-            strip5.show();
-            strip4.show();
-            strip3.show();
-            strip2.show();
-         }
-         triangle_game = 1;
-         state = WAIT_BALL;  
-        }else if(led10 == 0 && led4 == 0){
-          strip10.clear();
-          strip4.clear();
-          for (int i = 0; i < NUMPIXELS; i++) {
-           strip10.setPixelColor(i, strip10.Color(0, 255, 0));
-           strip9.setPixelColor(i, strip9.Color(0, 255, 0));
-           strip8.setPixelColor(i, strip8.Color(0, 255, 0));
-           strip7.setPixelColor(i, strip7.Color(0, 255, 0));
-           strip6.setPixelColor(i, strip6.Color(0, 255, 0));
-           strip5.setPixelColor(i, strip5.Color(0, 255, 0));
-           strip4.setPixelColor(i, strip4.Color(0, 255, 0));
-           strip3.setPixelColor(i, strip3.Color(0, 255, 0));
-           strip2.setPixelColor(i, strip2.Color(0, 255, 0));
-           strip10.show();
-           strip9.show();
-           strip8.show();
-           strip7.show();
-           strip6.show();
-           strip5.show();
-           strip4.show();
-           strip3.show();
-           strip2.show();
-           
-          }
-          triangle_game = 1;
-          state = WAIT_BALL;  
-        }
-        break;    
-       }
-
-       if (level_game == 1) { //le capteur détecte un mouvement
-        if(led1 == 0){
-          led1 = 1;
-          for(int a=0; a<10; a++) {  // Repeat 10 times...
-            for(int b=0; b<3; b++) { //  'b' counts from 0 to 2...
-             strip1.clear();         //   Set all pixels in RAM to 0 (off)
-              // 'c' counts up from 'b' to end of strip in steps of 3...
-              for(int c=b; c<strip1.numPixels(); c += 3) {
-              strip1.setPixelColor(c, strip1.Color(251, 255, 0)); // Set pixel 'c' to value 'color'
-              }
-            strip1.show(); // Update strip with new contents
-            delay(50);  // Pause for a moment
-            }
-          }
-          for (int i = 0; i < NUMPIXELS; i++) {
-            strip1.setPixelColor(i, strip1.Color(251, 255, 0));
-            strip1.show();
-      
-          } 
-        }
-        if(digitalRead(PIR_PIN4) == HIGH){
-          level_game = 2;
-        }
-        if(digitalRead(PIR_PIN10) == HIGH){
-          level_game = 3;
-        }
-        
-        /*
-         * strip 4
-         */
-        for(int a=0; a<10; a++) {  // Repeat 10 times...
-          for(int b=0; b<3; b++) { //  'b' counts from 0 to 2...
-           strip4.clear();         //   Set all pixels in RAM to 0 (off)
-           strip10.clear();
-            // 'c' counts up from 'b' to end of strip in steps of 3...
-            for(int c=b; c<strip4.numPixels(); c += 3) {
-            strip4.setPixelColor(c, strip4.Color(251, 255, 0)); // Set pixel 'c' to value 'color'
-            strip10.setPixelColor(c, strip4.Color(251, 255, 0));
-            }
-          strip4.show(); // Update strip with new contents
-          strip10.show();
-          delay(30);  // Pause for a moment
-          }
-        }
-        
-       }    
-
-       if(level_game == 2){
-         if (led4 == 0) { //le capteur détecte un mouvement
-          Serial.println("mouvement detecte 4 ");
-          for (int i = 0; i < NUMPIXELS; i++) {
-            strip4.setPixelColor(i, strip4.Color(0, 255, 205));
-            strip4.show();
-            delay(30);
-          } 
-          for (int i = 0; i < NUMPIXELS; i++) {
-            strip3.setPixelColor(i, strip3.Color(0, 255, 205));
-            strip3.show();
-            delay(30);
-          }
-          for (int i = 0; i < NUMPIXELS; i++) {
-            strip2.setPixelColor(i, strip2.Color(0, 255, 205));
-            strip2.show();
-            delay(30);
-          }
-          for (int i = 0; i < NUMPIXELS; i++) {
-            strip1.setPixelColor(i, strip1.Color(0, 255, 205));
-            strip1.show();
-            delay(30);
-          }
   
-          for (int i = 0; i < NUMPIXELS; i++) {
-            strip5.setPixelColor(i, strip5.Color(0, 0, 0));
-            strip5.show();
-              
-          }
-          for (int i = 0; i < NUMPIXELS; i++) {
-            strip6.setPixelColor(i, strip6.Color(0, 0, 0));
-            strip6.show();
-            
-          }
-          for (int i = 0; i < NUMPIXELS; i++) {
-            strip7.setPixelColor(i, strip7.Color(0, 0, 0));
-            strip7.show();
-            
-          }
-          for (int i = 0; i < NUMPIXELS; i++) {
-            strip8.setPixelColor(i, strip8.Color(0, 0, 0));
-            strip8.show();
-            
-          }
-          for (int i = 0; i < NUMPIXELS; i++) {
-            strip9.setPixelColor(i, strip9.Color(0, 0, 0));
-            strip9.show();
-            
-          }
-          led4 = 1;
-          led3 = 1;
-          led2 = 1;
-          
-          
-         }
-         
-         /*
-         * strip 10
-         */
-        for(int a=0; a<10; a++) {  // Repeat 10 times...
-          for(int b=0; b<3; b++) { //  'b' counts from 0 to 2...
-           strip10.clear();         //   Set all pixels in RAM to 0 (off)
-            // 'c' counts up from 'b' to end of strip in steps of 3...
-            for(int c=b; c<strip10.numPixels(); c += 3) {
-            strip10.setPixelColor(c, strip10.Color(251, 255, 0)); // Set pixel 'c' to value 'color'
-            }
-          strip10.show(); // Update strip with new contents
-          delay(50);  // Pause for a moment
-          }
-        }
-        if(digitalRead(PIR_PIN10) == HIGH){
-          level_game = 4;
-        }
-       } 
-       
-      if(level_game == 3){
-        if (led10 == 0) { //le capteur détecte un mouvement
-          Serial.println("mouvement detecte 4 ");
-          for (int i = 0; i < NUMPIXELS; i++) {
-            strip1.setPixelColor(i, strip1.Color(0, 255, 205));
-            strip1.show();
-            delay(30);
-          } 
-          for (int i = 0; i < NUMPIXELS; i++) {
-            strip7.setPixelColor(i, strip7.Color(0, 255, 205));
-            strip7.show();
-            delay(30);
-          }
-          for (int i = 0; i < NUMPIXELS; i++) {
-            strip8.setPixelColor(i, strip8.Color(0, 255, 205));
-            strip8.show();
-            delay(30);
-          }
-          for (int i = 0; i < NUMPIXELS; i++) {
-            strip10.setPixelColor(i, strip10.Color(0, 255, 205));
-            strip10.show();
-            delay(30);
-          }
-  
-          for (int i = 0; i < NUMPIXELS; i++) {
-            strip2.setPixelColor(i, strip2.Color(0, 0, 0));
-            strip2.show();
-              
-          }
-          for (int i = 0; i < NUMPIXELS; i++) {
-            strip3.setPixelColor(i, strip3.Color(0, 0, 0));
-            strip3.show();
-            
-          }
-          for (int i = 0; i < NUMPIXELS; i++) {
-            strip5.setPixelColor(i, strip5.Color(0, 0, 0));
-            strip5.show();
-            
-          }
-          for (int i = 0; i < NUMPIXELS; i++) {
-            strip6.setPixelColor(i, strip6.Color(0, 0, 0));
-            strip6.show();
-            
-          }
-          for (int i = 0; i < NUMPIXELS; i++) {
-            strip9.setPixelColor(i, strip9.Color(0, 0, 0));
-            strip9.show();
-            
-          }
-          led10 = 1;
-          led7 = 1;
-          led8 = 1;
-         }
-         
-         /*
-         * strip 4
-         */
-        for(int a=0; a<10; a++) {  // Repeat 10 times...
-          for(int b=0; b<3; b++) { //  'b' counts from 0 to 2...
-           strip4.clear();         //   Set all pixels in RAM to 0 (off)
-            // 'c' counts up from 'b' to end of strip in steps of 3...
-            for(int c=b; c<strip4.numPixels(); c += 3) {
-            strip4.setPixelColor(c, strip4.Color(251, 255, 0)); // Set pixel 'c' to value 'color'
-            }
-          strip4.show(); // Update strip with new contents
-          delay(50);  // Pause for a moment
-          }
-        }
-        if(digitalRead(PIR_PIN4) == HIGH){
-          level_game = 5;
-        }
-      }
-      if(level_game == 4){
-        
-        led10 = 1;
-       
-        Serial.println("mouvement detecte 10 ");
-        for (int i = 0; i < NUMPIXELS; i++) {
-          strip10.setPixelColor(i, strip10.Color(255, 0, 0));
-          strip10.show();
-          delay(30);
-        }
-        int y = NUMPIXELS - 1;
-        for (int i = 0; i < NUMPIXELS; i++) {
-          strip9.setPixelColor(y, strip9.Color(255, 0, 0));
-          strip8.setPixelColor(i, strip8.Color(255, 0, 0));
-          strip9.show();
-          strip8.show();
-          y--;
-          delay(30);
-          
-        }
-        y = NUMPIXELS - 1;
-         for (int i = 0; i < NUMPIXELS; i++) {
-          strip5.setPixelColor(y, strip5.Color(255, 0, 0));
-          strip7.setPixelColor(i, strip7.Color(255, 0, 0));
-          strip5.show();
-          strip7.show();
-          y--;
-          delay(30);
-          
-        }
-        y = NUMPIXELS - 1;
-         for (int i = 0; i < NUMPIXELS; i++) {
-          strip1.setPixelColor(i, strip1.Color(255, 0, 0));
-          strip4.setPixelColor(y, strip4.Color(255, 0, 0));
-          strip1.show();
-          strip4.show();
-          y--;
-          delay(30);
-        }
-        y = NUMPIXELS - 1;
-         for (int i = 0; i < NUMPIXELS; i++) {
-          strip2.setPixelColor(i, strip2.Color(255, 0, 0));
-          strip3.setPixelColor(y, strip3.Color(255, 0, 0));
-          strip2.show();
-          strip3.show();
-          y--;
-          delay(30);
-        }
-        for(int z = 0; z< 20; z++){ 
-        
-        for (int i = 0; i < NUMPIXELS; i++) {
-            strip1.setPixelColor(i, strip1.Color(0, 0, 0));
-            strip2.setPixelColor(i, strip2.Color(0, 0, 0));
-            strip3.setPixelColor(i, strip3.Color(0, 0, 0));
-            strip4.setPixelColor(i, strip4.Color(0, 0, 0));
-            strip5.setPixelColor(i, strip5.Color(0, 0, 0));
-            strip7.setPixelColor(i, strip7.Color(0, 0, 0));
-            strip8.setPixelColor(i, strip8.Color(0, 0, 0));
-            strip9.setPixelColor(i, strip9.Color(0, 0, 0));
-            strip10.setPixelColor(i, strip10.Color(0, 0, 0));
-            strip1.show();
-            strip2.show();
-            strip3.show();
-            strip4.show();
-            strip5.show();
-            strip7.show();
-            strip8.show();
-            strip9.show();
-            strip10.show();
-          }
-          delay(50);
-         for (int i = 0; i < NUMPIXELS; i++) {
-            strip1.setPixelColor(i, strip1.Color(255, 0, 0));
-            strip2.setPixelColor(i, strip2.Color(255, 0, 0));
-            strip3.setPixelColor(i, strip3.Color(255, 0, 0));
-            strip4.setPixelColor(i, strip4.Color(255, 0, 0));
-            strip5.setPixelColor(i, strip5.Color(255, 0, 0));
-            strip7.setPixelColor(i, strip7.Color(255, 0, 0));
-            strip8.setPixelColor(i, strip8.Color(255, 0, 0));
-            strip9.setPixelColor(i, strip9.Color(255, 0, 0));
-            strip10.setPixelColor(i, strip10.Color(255, 0, 0));
-            strip1.show();
-            strip2.show();
-            strip3.show();
-            strip4.show();
-            strip5.show();
-            strip7.show();
-            strip8.show();
-            strip9.show();
-            strip10.show();
-            
-          }
-          delay(50);
-       } 
-        for (int i = 0; i < NUMPIXELS; i++) {
-            strip6.setPixelColor(i, strip6.Color(0, 255, 0));
-            strip6.show();
-            
-          }
-        led1 = 1;
-        led2 = 1;
-        led3 = 1;
-        led4 = 1;
-        led5 = 1;
-        led7 = 1;
-        led8 = 1;
-        led9 = 1;
-        led10 = 1;
-        
-        triangle_game = 1;
-        state = WAIT_BALL;
-       
-      }
-      if(level_game == 5){
-        
-        led4 = 1;
 
-        /*
-         * 
-         * refaire l'ordre d'allumage des strips et des leds 
-         * 
-         */
-       
-        Serial.println("mouvement detecte 10 ");
-        for (int i = 0; i < NUMPIXELS; i++) {
-          strip10.setPixelColor(i, strip10.Color(255, 0, 0));
-          strip10.show();
-          delay(30);
-        }
-        int y = NUMPIXELS - 1;
-        for (int i = 0; i < NUMPIXELS; i++) {
-          strip9.setPixelColor(y, strip9.Color(255, 0, 0));
-          strip8.setPixelColor(i, strip8.Color(255, 0, 0));
-          strip9.show();
-          strip8.show();
-          y--;
-          delay(30);
-          
-        }
-        y = NUMPIXELS - 1;
-         for (int i = 0; i < NUMPIXELS; i++) {
-          strip5.setPixelColor(y, strip5.Color(255, 0, 0));
-          strip7.setPixelColor(i, strip7.Color(255, 0, 0));
-          strip5.show();
-          strip7.show();
-          y--;
-          delay(30);
-          
-        }
-        y = NUMPIXELS - 1;
-         for (int i = 0; i < NUMPIXELS; i++) {
-          strip1.setPixelColor(i, strip1.Color(255, 0, 0));
-          strip4.setPixelColor(y, strip4.Color(255, 0, 0));
-          strip1.show();
-          strip4.show();
-          y--;
-          delay(30);
-        }
-        y = NUMPIXELS - 1;
-         for (int i = 0; i < NUMPIXELS; i++) {
-          strip2.setPixelColor(i, strip2.Color(255, 0, 0));
-          strip3.setPixelColor(y, strip3.Color(255, 0, 0));
-          strip2.show();
-          strip3.show();
-          y--;
-          delay(30);
-        }
-        for(int z = 0; z< 20; z++){ 
-        
-        for (int i = 0; i < NUMPIXELS; i++) {
-            strip1.setPixelColor(i, strip1.Color(0, 0, 0));
-            strip2.setPixelColor(i, strip2.Color(0, 0, 0));
-            strip3.setPixelColor(i, strip3.Color(0, 0, 0));
-            strip4.setPixelColor(i, strip4.Color(0, 0, 0));
-            strip5.setPixelColor(i, strip5.Color(0, 0, 0));
-            strip7.setPixelColor(i, strip7.Color(0, 0, 0));
-            strip8.setPixelColor(i, strip8.Color(0, 0, 0));
-            strip9.setPixelColor(i, strip9.Color(0, 0, 0));
-            strip10.setPixelColor(i, strip10.Color(0, 0, 0));
-            strip1.show();
-            strip2.show();
-            strip3.show();
-            strip4.show();
-            strip5.show();
-            strip7.show();
-            strip8.show();
-            strip9.show();
-            strip10.show();
-          }
-          delay(50);
-         for (int i = 0; i < NUMPIXELS; i++) {
-            strip1.setPixelColor(i, strip1.Color(255, 0, 0));
-            strip2.setPixelColor(i, strip2.Color(255, 0, 0));
-            strip3.setPixelColor(i, strip3.Color(255, 0, 0));
-            strip4.setPixelColor(i, strip4.Color(255, 0, 0));
-            strip5.setPixelColor(i, strip5.Color(255, 0, 0));
-            strip7.setPixelColor(i, strip7.Color(255, 0, 0));
-            strip8.setPixelColor(i, strip8.Color(255, 0, 0));
-            strip9.setPixelColor(i, strip9.Color(255, 0, 0));
-            strip10.setPixelColor(i, strip10.Color(255, 0, 0));
-            strip1.show();
-            strip2.show();
-            strip3.show();
-            strip4.show();
-            strip5.show();
-            strip7.show();
-            strip8.show();
-            strip9.show();
-            strip10.show();
-            
-          }
-          delay(50);
-       } 
-        for (int i = 0; i < NUMPIXELS; i++) {
-            strip6.setPixelColor(i, strip6.Color(0, 255, 0));
-            strip6.show();
-            
-          }
-        led1 = 1;
-        led2 = 1;
-        led3 = 1;
-        led4 = 1;
-        led5 = 1;
-        led7 = 1;
-        led8 = 1;
-        led9 = 1;
-        led10 = 1;
-        
-        triangle_game = 1;
-        state = WAIT_BALL;
-       
-      }
-       
-
-    break;
-
-    /*****************************************************************     10     *******************************************************************************************************/
-
-    case TRIANGLE_GAME_10:
-    
-      //test sans le strip 5 car cassé !!!
-       if(digitalRead(PIR_PIN2) == HIGH || digitalRead(PIR_PIN3) == HIGH || digitalRead(PIR_PIN6) == HIGH || digitalRead(PIR_PIN7) == HIGH || digitalRead(PIR_PIN8) == HIGH || digitalRead(PIR_PIN9) == HIGH ){
-        if(led1 == 1){  // la ligne entre 1 et 10 est bleu
-          for (int i = 0; i < NUMPIXELS; i++) {
-          
-          strip9.setPixelColor(i, strip9.Color(0, 255, 0));
-          strip6.setPixelColor(i, strip8.Color(0, 255, 0));
-          strip5.setPixelColor(i, strip7.Color(0, 255, 0));
-          strip4.setPixelColor(i, strip6.Color(0, 255, 0));
-          strip3.setPixelColor(i, strip5.Color(0, 255, 0));
-          strip2.setPixelColor(i, strip2.Color(0, 255, 0));
-          strip9.show();
-          strip6.show();
-          strip5.show();
-          strip4.show();
-          strip3.show();
-          strip2.show();
-         }
-         triangle_game = 1;
-         state = WAIT_BALL;  
-        }else if(led4 == 1){ // la ligne entre 4 et 10 est bleu
-          for (int i = 0; i < NUMPIXELS; i++) {
-          strip8.setPixelColor(i, strip8.Color(0, 255, 0));
-          strip7.setPixelColor(i, strip7.Color(0, 255, 0));
-          strip6.setPixelColor(i, strip6.Color(0, 255, 0));
-          strip3.setPixelColor(i, strip3.Color(0, 255, 0));
-          strip2.setPixelColor(i, strip2.Color(0, 255, 0));
-          strip1.setPixelColor(i, strip1.Color(0, 255, 0));
-          strip8.show();
-          strip7.show();
-          strip6.show();
-          strip3.show();
-          strip2.show();
-          strip1.show();
-         }
-         triangle_game = 1;
-         state = WAIT_BALL;  
-        }else if(led10 == 0 && led1 == 0){
-          strip10.clear();
-          strip4.clear();
-          for (int i = 0; i < NUMPIXELS; i++) {
-           
-           strip9.setPixelColor(i, strip9.Color(0, 255, 0));
-           strip8.setPixelColor(i, strip8.Color(0, 255, 0));
-           strip7.setPixelColor(i, strip7.Color(0, 255, 0));
-           strip6.setPixelColor(i, strip6.Color(0, 255, 0));
-           strip5.setPixelColor(i, strip5.Color(0, 255, 0));
-           strip4.setPixelColor(i, strip4.Color(0, 255, 0));
-           strip3.setPixelColor(i, strip3.Color(0, 255, 0));
-           strip2.setPixelColor(i, strip2.Color(0, 255, 0));
-           strip1.setPixelColor(i, strip1.Color(0, 255, 0));
-           
-           strip9.show();
-           strip8.show();
-           strip7.show();
-           strip6.show();
-           strip5.show();
-           strip4.show();
-           strip3.show();
-           strip2.show();
-           strip1.show();
-          }
-          triangle_game = 1;
-          state = WAIT_BALL;  
-        }
-        break;    
-       }
-
-       if (level_game == 1) { //le capteur détecte un mouvement
-        if(led10 == 0){
-          led10 = 1;
-          for(int a=0; a<10; a++) {  // Repeat 10 times...
-            for(int b=0; b<3; b++) { //  'b' counts from 0 to 2...
-             strip10.clear();         //   Set all pixels in RAM to 0 (off)
-              // 'c' counts up from 'b' to end of strip in steps of 3...
-              for(int c=b; c<strip10.numPixels(); c += 3) {
-              strip10.setPixelColor(c, strip10.Color(251, 255, 0)); // Set pixel 'c' to value 'color'
-              }
-            strip10.show(); // Update strip with new contents
-            delay(50);  // Pause for a moment
-            }
-          }
-          for (int i = 0; i < NUMPIXELS; i++) {
-            strip10.setPixelColor(i, strip10.Color(251, 255, 0));
-            strip10.show();
-      
-          } 
-        }
-        if(digitalRead(PIR_PIN4) == HIGH){
-          level_game = 2;
-        }
-        if(digitalRead(PIR_PIN1) == HIGH){
-          level_game = 3;
-        }
-        
-        /*
-         * strip 4 et 1
-         */
-        for(int a=0; a<10; a++) {  // Repeat 10 times...
-          for(int b=0; b<3; b++) { //  'b' counts from 0 to 2...
-           strip1.clear();         //   Set all pixels in RAM to 0 (off)
-           strip4.clear();
-            // 'c' counts up from 'b' to end of strip in steps of 3...
-            for(int c=b; c<strip1.numPixels(); c += 3) {
-            strip1.setPixelColor(c, strip1.Color(251, 255, 0)); // Set pixel 'c' to value 'color'
-            strip4.setPixelColor(c, strip4.Color(251, 255, 0));
-            }
-          strip1.show(); // Update strip with new contents
-          strip4.show();
-          delay(30);  // Pause for a moment
-          }
-        }
-        
-       }    
-
-       if(level_game == 2){
-         if (led4 == 0) { //le capteur détecte un mouvement
-          Serial.println("mouvement detecte 4 ");
-          for (int i = 0; i < NUMPIXELS; i++) {
-            strip4.setPixelColor(i, strip4.Color(0, 255, 205));
-            strip4.show();
-            delay(30);
-          }
-          for (int i = 0; i < NUMPIXELS; i++) {
-            strip5.setPixelColor(i, strip5.Color(0, 255, 205));
-            strip5.show();
-            delay(30);
-          }
-          for (int i = 0; i < NUMPIXELS; i++) {
-            strip9.setPixelColor(i, strip9.Color(0, 255, 205));
-            strip9.show();
-            delay(30);
-          }
-          for (int i = 0; i < NUMPIXELS; i++) {
-            strip10.setPixelColor(i, strip10.Color(0, 255, 205));
-            strip10.show();
-            delay(30);
-          } 
-
-          for (int i = 0; i < NUMPIXELS; i++) {
-            strip2.setPixelColor(i, strip2.Color(0, 0, 0));
-            strip2.show();
-            
-          }
-          for (int i = 0; i < NUMPIXELS; i++) {
-            strip3.setPixelColor(i, strip3.Color(0, 0, 0));
-            strip3.show();
-            
-          }
-          for (int i = 0; i < NUMPIXELS; i++) {
-            strip6.setPixelColor(i, strip6.Color(0, 0, 0));
-            strip6.show();
-            
-          }
-          for (int i = 0; i < NUMPIXELS; i++) {
-            strip7.setPixelColor(i, strip7.Color(0, 0, 0));
-            strip7.show();
-            
-          }
-          for (int i = 0; i < NUMPIXELS; i++) {
-            strip8.setPixelColor(i, strip8.Color(0, 0, 0));
-            strip8.show();
-              
-          }
-          led4 = 1;
-          led5 = 1;
-          led9 = 1;
-         }
-         
-         /*
-         * strip 1
-         */
-        for(int a=0; a<10; a++) {  // Repeat 10 times...
-          for(int b=0; b<3; b++) { //  'b' counts from 0 to 2...
-           strip1.clear();         //   Set all pixels in RAM to 0 (off)
-            // 'c' counts up from 'b' to end of strip in steps of 3...
-            for(int c=b; c<strip1.numPixels(); c += 3) {
-            strip1.setPixelColor(c, strip1.Color(251, 255, 0)); // Set pixel 'c' to value 'color'
-            }
-          strip1.show(); // Update strip with new contents
-          delay(30);  // Pause for a moment
-          }
-        }
-        if(digitalRead(PIR_PIN1) == HIGH){
-          level_game = 4;
-        }
-       } 
-       
-      if(level_game == 3){
-        if (led1 == 0) { //le capteur détecte un mouvement
-          for (int i = 0; i < NUMPIXELS; i++) {
-            strip1.setPixelColor(i, strip1.Color(0, 255, 205));
-            strip1.show();
-            delay(30);
-          }
-          for (int i = 0; i < NUMPIXELS; i++) {
-            strip7.setPixelColor(i, strip7.Color(0, 255, 205));
-            strip7.show();
-            delay(30);
-          }
-          for (int i = 0; i < NUMPIXELS; i++) {
-            strip8.setPixelColor(i, strip8.Color(0, 255, 205));
-            strip8.show();
-            delay(30);
-          }
-          for (int i = 0; i < NUMPIXELS; i++) {
-            strip10.setPixelColor(i, strip10.Color(0, 255, 205));
-            strip10.show();
-            delay(30);
-          } 
-
-          for (int i = 0; i < NUMPIXELS; i++) {
-            strip2.setPixelColor(i, strip2.Color(0, 0, 0));
-            strip2.show();
-              
-          }
-          for (int i = 0; i < NUMPIXELS; i++) {
-            strip3.setPixelColor(i, strip3.Color(0, 0, 0));
-            strip3.show();
-            
-          }
-          for (int i = 0; i < NUMPIXELS; i++) {
-            strip5.setPixelColor(i, strip5.Color(0, 0, 0));
-            strip5.show();
-            
-          }
-          for (int i = 0; i < NUMPIXELS; i++) {
-            strip6.setPixelColor(i, strip6.Color(0, 0, 0));
-            strip6.show();
-            
-          }
-          for (int i = 0; i < NUMPIXELS; i++) {
-            strip9.setPixelColor(i, strip9.Color(0, 0, 0));
-            strip9.show();
-            
-          }
-          led1 = 1;
-          led7 = 1;
-          led8 = 1;
-         }
-         
-         /*
-         * strip 4
-         */
-        for(int a=0; a<10; a++) {  // Repeat 10 times...
-          for(int b=0; b<3; b++) { //  'b' counts from 0 to 2...
-           strip4.clear();         //   Set all pixels in RAM to 0 (off)
-            // 'c' counts up from 'b' to end of strip in steps of 3...
-            for(int c=b; c<strip4.numPixels(); c += 3) {
-            strip4.setPixelColor(c, strip4.Color(251, 255, 0)); // Set pixel 'c' to value 'color'
-            }
-          strip4.show(); // Update strip with new contents
-          delay(50);  // Pause for a moment
-          }
-        }
-        if(digitalRead(PIR_PIN4) == HIGH){
-          level_game = 5;
-        }
-      }
-      if(level_game == 4){
-        
-        led1 = 1;
-       
-        Serial.println("mouvement detecte 10 ");
-        for (int i = 0; i < NUMPIXELS; i++) {
-          strip10.setPixelColor(i, strip10.Color(255, 0, 0));
-          strip10.show();
-          delay(30);
-        }
-        int y = NUMPIXELS - 1;
-        for (int i = 0; i < NUMPIXELS; i++) {
-          strip9.setPixelColor(y, strip9.Color(255, 0, 0));
-          strip8.setPixelColor(i, strip8.Color(255, 0, 0));
-          strip9.show();
-          strip8.show();
-          y--;
-          delay(30);
-          
-        }
-        y = NUMPIXELS - 1;
-         for (int i = 0; i < NUMPIXELS; i++) {
-          strip5.setPixelColor(y, strip5.Color(255, 0, 0));
-          strip7.setPixelColor(i, strip7.Color(255, 0, 0));
-          strip5.show();
-          strip7.show();
-          y--;
-          delay(30);
-          
-        }
-        y = NUMPIXELS - 1;
-         for (int i = 0; i < NUMPIXELS; i++) {
-          strip1.setPixelColor(i, strip1.Color(255, 0, 0));
-          strip4.setPixelColor(y, strip4.Color(255, 0, 0));
-          strip1.show();
-          strip4.show();
-          y--;
-          delay(30);
-        }
-        y = NUMPIXELS - 1;
-         for (int i = 0; i < NUMPIXELS; i++) {
-          strip2.setPixelColor(i, strip2.Color(255, 0, 0));
-          strip3.setPixelColor(y, strip3.Color(255, 0, 0));
-          strip2.show();
-          strip3.show();
-          y--;
-          delay(30);
-        }
-        for(int z = 0; z< 20; z++){ 
-        
-        for (int i = 0; i < NUMPIXELS; i++) {
-            strip1.setPixelColor(i, strip1.Color(0, 0, 0));
-            strip2.setPixelColor(i, strip2.Color(0, 0, 0));
-            strip3.setPixelColor(i, strip3.Color(0, 0, 0));
-            strip4.setPixelColor(i, strip4.Color(0, 0, 0));
-            strip5.setPixelColor(i, strip5.Color(0, 0, 0));
-            strip7.setPixelColor(i, strip7.Color(0, 0, 0));
-            strip8.setPixelColor(i, strip8.Color(0, 0, 0));
-            strip9.setPixelColor(i, strip9.Color(0, 0, 0));
-            strip10.setPixelColor(i, strip10.Color(0, 0, 0));
-            strip1.show();
-            strip2.show();
-            strip3.show();
-            strip4.show();
-            strip5.show();
-            strip7.show();
-            strip8.show();
-            strip9.show();
-            strip10.show();
-          }
-          delay(50);
-         for (int i = 0; i < NUMPIXELS; i++) {
-            strip1.setPixelColor(i, strip1.Color(255, 0, 0));
-            strip2.setPixelColor(i, strip2.Color(255, 0, 0));
-            strip3.setPixelColor(i, strip3.Color(255, 0, 0));
-            strip4.setPixelColor(i, strip4.Color(255, 0, 0));
-            strip5.setPixelColor(i, strip5.Color(255, 0, 0));
-            strip7.setPixelColor(i, strip7.Color(255, 0, 0));
-            strip8.setPixelColor(i, strip8.Color(255, 0, 0));
-            strip9.setPixelColor(i, strip9.Color(255, 0, 0));
-            strip10.setPixelColor(i, strip10.Color(255, 0, 0));
-            strip1.show();
-            strip2.show();
-            strip3.show();
-            strip4.show();
-            strip5.show();
-            strip7.show();
-            strip8.show();
-            strip9.show();
-            strip10.show();
-            
-          }
-          delay(50);
-       } 
-        for (int i = 0; i < NUMPIXELS; i++) {
-            strip6.setPixelColor(i, strip6.Color(0, 255, 0));
-            strip6.show();
-            
-          }
-        led1 = 1;
-        led2 = 1;
-        led3 = 1;
-        led4 = 1;
-        led5 = 1;
-        led7 = 1;
-        led8 = 1;
-        led9 = 1;
-        led10 = 1;
-        
-        triangle_game = 1;
-        state = WAIT_BALL;
-       
-      }
-      if(level_game == 5){
-        
-        led4 = 1;
-
-        /*
-         * 
-         * refaire l'ordre d'allumage des strips et des leds 
-         * 
-         */
-       
-        Serial.println("mouvement detecte 10 ");
-        for (int i = 0; i < NUMPIXELS; i++) {
-          strip10.setPixelColor(i, strip10.Color(255, 0, 0));
-          strip10.show();
-          delay(30);
-        }
-        int y = NUMPIXELS - 1;
-        for (int i = 0; i < NUMPIXELS; i++) {
-          strip9.setPixelColor(y, strip9.Color(255, 0, 0));
-          strip8.setPixelColor(i, strip8.Color(255, 0, 0));
-          strip9.show();
-          strip8.show();
-          y--;
-          delay(30);
-          
-        }
-        y = NUMPIXELS - 1;
-         for (int i = 0; i < NUMPIXELS; i++) {
-          strip5.setPixelColor(y, strip5.Color(255, 0, 0));
-          strip7.setPixelColor(i, strip7.Color(255, 0, 0));
-          strip5.show();
-          strip7.show();
-          y--;
-          delay(30);
-          
-        }
-        y = NUMPIXELS - 1;
-         for (int i = 0; i < NUMPIXELS; i++) {
-          strip1.setPixelColor(i, strip1.Color(255, 0, 0));
-          strip4.setPixelColor(y, strip4.Color(255, 0, 0));
-          strip1.show();
-          strip4.show();
-          y--;
-          delay(30);
-        }
-        y = NUMPIXELS - 1;
-         for (int i = 0; i < NUMPIXELS; i++) {
-          strip2.setPixelColor(i, strip2.Color(255, 0, 0));
-          strip3.setPixelColor(y, strip3.Color(255, 0, 0));
-          strip2.show();
-          strip3.show();
-          y--;
-          delay(30);
-        }
-        for(int z = 0; z< 20; z++){ 
-        
-        for (int i = 0; i < NUMPIXELS; i++) {
-            strip1.setPixelColor(i, strip1.Color(0, 0, 0));
-            strip2.setPixelColor(i, strip2.Color(0, 0, 0));
-            strip3.setPixelColor(i, strip3.Color(0, 0, 0));
-            strip4.setPixelColor(i, strip4.Color(0, 0, 0));
-            strip5.setPixelColor(i, strip5.Color(0, 0, 0));
-            strip7.setPixelColor(i, strip7.Color(0, 0, 0));
-            strip8.setPixelColor(i, strip8.Color(0, 0, 0));
-            strip9.setPixelColor(i, strip9.Color(0, 0, 0));
-            strip10.setPixelColor(i, strip10.Color(0, 0, 0));
-            strip1.show();
-            strip2.show();
-            strip3.show();
-            strip4.show();
-            strip5.show();
-            strip7.show();
-            strip8.show();
-            strip9.show();
-            strip10.show();
-          }
-          delay(50);
-         for (int i = 0; i < NUMPIXELS; i++) {
-            strip1.setPixelColor(i, strip1.Color(255, 0, 0));
-            strip2.setPixelColor(i, strip2.Color(255, 0, 0));
-            strip3.setPixelColor(i, strip3.Color(255, 0, 0));
-            strip4.setPixelColor(i, strip4.Color(255, 0, 0));
-            strip5.setPixelColor(i, strip5.Color(255, 0, 0));
-            strip7.setPixelColor(i, strip7.Color(255, 0, 0));
-            strip8.setPixelColor(i, strip8.Color(255, 0, 0));
-            strip9.setPixelColor(i, strip9.Color(255, 0, 0));
-            strip10.setPixelColor(i, strip10.Color(255, 0, 0));
-            strip1.show();
-            strip2.show();
-            strip3.show();
-            strip4.show();
-            strip5.show();
-            strip7.show();
-            strip8.show();
-            strip9.show();
-            strip10.show();
-            
-          }
-          delay(50);
-       } 
-        for (int i = 0; i < NUMPIXELS; i++) {
-            strip6.setPixelColor(i, strip6.Color(0, 255, 0));
-            strip6.show();
-            
-          }
-        led1 = 1;
-        led2 = 1;
-        led3 = 1;
-        led4 = 1;
-        led5 = 1;
-        led7 = 1;
-        led8 = 1;
-        led9 = 1;
-        led10 = 1;
-        
-        triangle_game = 1;
-        state = WAIT_BALL;
-       
-      }
-      break;
-
-      /*****************************************************************     4     *******************************************************************************************************/
-      case TRIANGLE_GAME_4:
-    
-      //test sans le strip 5 car cassé !!!
-       if(digitalRead(PIR_PIN2) == HIGH || digitalRead(PIR_PIN3) == HIGH || digitalRead(PIR_PIN6) == HIGH || digitalRead(PIR_PIN7) == HIGH || digitalRead(PIR_PIN8) == HIGH || digitalRead(PIR_PIN9) == HIGH ){
-        if(led1 == 1){
-          for (int i = 0; i < NUMPIXELS; i++) {
-          strip10.setPixelColor(i, strip10.Color(0, 255, 0));
-          strip9.setPixelColor(i, strip9.Color(0, 255, 0));
-          strip8.setPixelColor(i, strip8.Color(0, 255, 0));
-          strip7.setPixelColor(i, strip7.Color(0, 255, 0));
-          strip6.setPixelColor(i, strip6.Color(0, 255, 0));
-          strip5.setPixelColor(i, strip5.Color(0, 255, 0));
-          strip10.show();
-          strip9.show();
-          strip8.show();
-          strip7.show();
-          strip6.show();
-          strip5.show();
-         }
-         triangle_game = 1;
-         state = WAIT_BALL;  
-        }else if(led10 == 1){
-          for (int i = 0; i < NUMPIXELS; i++) {
-           
-            strip8.setPixelColor(i, strip8.Color(0, 255, 0));
-            strip7.setPixelColor(i, strip7.Color(0, 255, 0));
-            strip6.setPixelColor(i, strip6.Color(0, 255, 0));
-            strip3.setPixelColor(i, strip3.Color(0, 255, 0));
-            strip2.setPixelColor(i, strip2.Color(0, 255, 0));
-            strip1.setPixelColor(i, strip1.Color(0, 255, 0));
-            strip8.show();
-            strip7.show();
-            strip6.show();
-            strip3.show();
-            strip2.show();
-            strip1.show();
-         }
-         triangle_game = 1;
-         state = WAIT_BALL;  
-        }else if(led10 == 0 && led4 == 0){
-          strip10.clear();
-          strip4.clear();
-          for (int i = 0; i < NUMPIXELS; i++) {
-           strip10.setPixelColor(i, strip10.Color(0, 255, 0));
-           strip9.setPixelColor(i, strip9.Color(0, 255, 0));
-           strip8.setPixelColor(i, strip8.Color(0, 255, 0));
-           strip7.setPixelColor(i, strip7.Color(0, 255, 0));
-           strip6.setPixelColor(i, strip6.Color(0, 255, 0));
-           strip5.setPixelColor(i, strip5.Color(0, 255, 0));
-           strip4.setPixelColor(i, strip4.Color(0, 255, 0));
-           strip3.setPixelColor(i, strip3.Color(0, 255, 0));
-           strip2.setPixelColor(i, strip2.Color(0, 255, 0));
-           strip10.show();
-           strip9.show();
-           strip8.show();
-           strip7.show();
-           strip6.show();
-           strip5.show();
-           strip4.show();
-           strip3.show();
-           strip2.show();
-           
-          }
-          triangle_game = 1;
-          state = WAIT_BALL;  
-        }
-        break;    
-       }
-
-       if (level_game == 1) { //le capteur détecte un mouvement
-        if(led4 == 0){
-          led4 = 1;
-          for(int a=0; a<10; a++) {  // Repeat 10 times...
-            for(int b=0; b<3; b++) { //  'b' counts from 0 to 2...
-             strip4.clear();         //   Set all pixels in RAM to 0 (off)
-              // 'c' counts up from 'b' to end of strip in steps of 3...
-              for(int c=b; c<strip4.numPixels(); c += 3) {
-              strip4.setPixelColor(c, strip4.Color(251, 255, 0)); // Set pixel 'c' to value 'color'
-              }
-            strip4.show(); // Update strip with new contents
-            delay(50);  // Pause for a moment
-            }
-          }
-          for (int i = 0; i < NUMPIXELS; i++) {
-            strip4.setPixelColor(i, strip4.Color(251, 255, 0));
-            strip4.show();
-      
-          } 
-        }
-        if(digitalRead(PIR_PIN1) == HIGH){
-          level_game = 2;
-        }
-        if(digitalRead(PIR_PIN10) == HIGH){
-          level_game = 3;
-        }
-        
-        /*
-         * strip 4
-         */
-        for(int a=0; a<10; a++) {  // Repeat 10 times...
-          for(int b=0; b<3; b++) { //  'b' counts from 0 to 2...
-           strip1.clear();         //   Set all pixels in RAM to 0 (off)
-           strip10.clear();
-            // 'c' counts up from 'b' to end of strip in steps of 3...
-            for(int c=b; c<strip1.numPixels(); c += 3) {
-            strip1.setPixelColor(c, strip1.Color(251, 255, 0)); // Set pixel 'c' to value 'color'
-            strip10.setPixelColor(c, strip10.Color(251, 255, 0));
-            }
-          strip1.show(); // Update strip with new contents
-          strip10.show();
-          delay(30);  // Pause for a moment
-          }
-        }
-        
-       }    
-
-       if(level_game == 2){
-         if (led1 == 0) { 
-          for (int i = 0; i < NUMPIXELS; i++) {
-            strip1.setPixelColor(i, strip1.Color(0, 255, 205));
-            strip1.show();
-            delay(30);
-          }
-          for (int i = 0; i < NUMPIXELS; i++) {
-            strip2.setPixelColor(i, strip2.Color(0, 255, 205));
-            strip2.show();
-            delay(30);
-          }
-          for (int i = 0; i < NUMPIXELS; i++) {
-            strip3.setPixelColor(i, strip3.Color(0, 255, 205));
-            strip3.show();
-            delay(30);
-          }
-          for (int i = 0; i < NUMPIXELS; i++) {
-            strip4.setPixelColor(i, strip4.Color(0, 255, 205));
-            strip4.show();
-            delay(30);
-          } 
-          
-          for (int i = 0; i < NUMPIXELS; i++) {
-            strip5.setPixelColor(i, strip5.Color(0, 0, 0));
-            strip5.show();
-              
-          }
-          for (int i = 0; i < NUMPIXELS; i++) {
-            strip6.setPixelColor(i, strip6.Color(0, 0, 0));
-            strip6.show();
-            
-          }
-          for (int i = 0; i < NUMPIXELS; i++) {
-            strip7.setPixelColor(i, strip7.Color(0, 0, 0));
-            strip7.show();
-            
-          }
-          for (int i = 0; i < NUMPIXELS; i++) {
-            strip8.setPixelColor(i, strip8.Color(0, 0, 0));
-            strip8.show();
-            
-          }
-          for (int i = 0; i < NUMPIXELS; i++) {
-            strip9.setPixelColor(i, strip9.Color(0, 0, 0));
-            strip9.show();
-            
-          }
-          led1 = 1;
-          led3 = 1;
-          led2 = 1;
-          
-          
-         }
-         
-         /*
-         * strip 10
-         */
-        for(int a=0; a<10; a++) {  // Repeat 10 times...
-          for(int b=0; b<3; b++) { //  'b' counts from 0 to 2...
-           strip10.clear();         //   Set all pixels in RAM to 0 (off)
-            // 'c' counts up from 'b' to end of strip in steps of 3...
-            for(int c=b; c<strip10.numPixels(); c += 3) {
-            strip10.setPixelColor(c, strip10.Color(251, 255, 0)); // Set pixel 'c' to value 'color'
-            }
-          strip10.show(); // Update strip with new contents
-          delay(30);  // Pause for a moment
-          }
-        }
-        if(digitalRead(PIR_PIN10) == HIGH){
-          level_game = 4;
-        }
-       } 
-       
-      if(level_game == 3){
-        if (led10 == 0) { //le capteur détecte un mouvement
-          Serial.println("mouvement detecte 4 ");
-          for (int i = 0; i < NUMPIXELS; i++) {
-            strip10.setPixelColor(i, strip10.Color(0, 255, 205));
-            strip10.show();
-            delay(30);
-          } 
-          for (int i = 0; i < NUMPIXELS; i++) {
-            strip9.setPixelColor(i, strip9.Color(0, 255, 205));
-            strip9.show();
-            delay(30);
-          }
-          for (int i = 0; i < NUMPIXELS; i++) {
-            strip5.setPixelColor(i, strip5.Color(0, 255, 205));
-            strip5.show();
-            delay(30);
-          }
-          for (int i = 0; i < NUMPIXELS; i++) {
-            strip4.setPixelColor(i, strip4.Color(0, 255, 205));
-            strip4.show();
-            delay(30);
-          }
-  
-          for (int i = 0; i < NUMPIXELS; i++) {
-            strip2.setPixelColor(i, strip2.Color(0, 0, 0));
-            strip2.show();
-              
-          }
-          for (int i = 0; i < NUMPIXELS; i++) {
-            strip3.setPixelColor(i, strip3.Color(0, 0, 0));
-            strip3.show();
-            
-          }
-          for (int i = 0; i < NUMPIXELS; i++) {
-            strip6.setPixelColor(i, strip6.Color(0, 0, 0));
-            strip6.show();
-            
-          }
-          for (int i = 0; i < NUMPIXELS; i++) {
-            strip7.setPixelColor(i, strip7.Color(0, 0, 0));
-            strip7.show();
-            
-          }
-          for (int i = 0; i < NUMPIXELS; i++) {
-            strip8.setPixelColor(i, strip8.Color(0, 0, 0));
-            strip8.show();
-            
-          }
-          led10 = 1;
-          led9 = 1;
-          led5 = 1;
-         }
-         
-         /*
-         * strip 4
-         */
-        for(int a=0; a<10; a++) {  // Repeat 10 times...
-          for(int b=0; b<3; b++) { //  'b' counts from 0 to 2...
-           strip1.clear();         //   Set all pixels in RAM to 0 (off)
-            // 'c' counts up from 'b' to end of strip in steps of 3...
-            for(int c=b; c<strip1.numPixels(); c += 3) {
-            strip1.setPixelColor(c, strip1.Color(251, 255, 0)); // Set pixel 'c' to value 'color'
-            }
-          strip1.show(); // Update strip with new contents
-          delay(30);  // Pause for a moment
-          }
-        }
-        if(digitalRead(PIR_PIN1) == HIGH){
-          level_game = 5;
-        }
-      }
-      if(level_game == 4){
-        
-        led10 = 1;
-       
-        Serial.println("mouvement detecte 10 ");
-        for (int i = 0; i < NUMPIXELS; i++) {
-          strip10.setPixelColor(i, strip10.Color(255, 0, 0));
-          strip10.show();
-          delay(30);
-        }
-        int y = NUMPIXELS - 1;
-        for (int i = 0; i < NUMPIXELS; i++) {
-          strip9.setPixelColor(y, strip9.Color(255, 0, 0));
-          strip8.setPixelColor(i, strip8.Color(255, 0, 0));
-          strip9.show();
-          strip8.show();
-          y--;
-          delay(30);
-          
-        }
-        y = NUMPIXELS - 1;
-         for (int i = 0; i < NUMPIXELS; i++) {
-          strip5.setPixelColor(y, strip5.Color(255, 0, 0));
-          strip7.setPixelColor(i, strip7.Color(255, 0, 0));
-          strip5.show();
-          strip7.show();
-          y--;
-          delay(30);
-          
-        }
-        y = NUMPIXELS - 1;
-         for (int i = 0; i < NUMPIXELS; i++) {
-          strip1.setPixelColor(i, strip1.Color(255, 0, 0));
-          strip4.setPixelColor(y, strip4.Color(255, 0, 0));
-          strip1.show();
-          strip4.show();
-          y--;
-          delay(30);
-        }
-        y = NUMPIXELS - 1;
-         for (int i = 0; i < NUMPIXELS; i++) {
-          strip2.setPixelColor(i, strip2.Color(255, 0, 0));
-          strip3.setPixelColor(y, strip3.Color(255, 0, 0));
-          strip2.show();
-          strip3.show();
-          y--;
-          delay(30);
-        }
-        for(int z = 0; z< 20; z++){ 
-        
-        for (int i = 0; i < NUMPIXELS; i++) {
-            strip1.setPixelColor(i, strip1.Color(0, 0, 0));
-            strip2.setPixelColor(i, strip2.Color(0, 0, 0));
-            strip3.setPixelColor(i, strip3.Color(0, 0, 0));
-            strip4.setPixelColor(i, strip4.Color(0, 0, 0));
-            strip5.setPixelColor(i, strip5.Color(0, 0, 0));
-            strip7.setPixelColor(i, strip7.Color(0, 0, 0));
-            strip8.setPixelColor(i, strip8.Color(0, 0, 0));
-            strip9.setPixelColor(i, strip9.Color(0, 0, 0));
-            strip10.setPixelColor(i, strip10.Color(0, 0, 0));
-            strip1.show();
-            strip2.show();
-            strip3.show();
-            strip4.show();
-            strip5.show();
-            strip7.show();
-            strip8.show();
-            strip9.show();
-            strip10.show();
-          }
-          delay(50);
-         for (int i = 0; i < NUMPIXELS; i++) {
-            strip1.setPixelColor(i, strip1.Color(255, 0, 0));
-            strip2.setPixelColor(i, strip2.Color(255, 0, 0));
-            strip3.setPixelColor(i, strip3.Color(255, 0, 0));
-            strip4.setPixelColor(i, strip4.Color(255, 0, 0));
-            strip5.setPixelColor(i, strip5.Color(255, 0, 0));
-            strip7.setPixelColor(i, strip7.Color(255, 0, 0));
-            strip8.setPixelColor(i, strip8.Color(255, 0, 0));
-            strip9.setPixelColor(i, strip9.Color(255, 0, 0));
-            strip10.setPixelColor(i, strip10.Color(255, 0, 0));
-            strip1.show();
-            strip2.show();
-            strip3.show();
-            strip4.show();
-            strip5.show();
-            strip7.show();
-            strip8.show();
-            strip9.show();
-            strip10.show();
-            
-          }
-          delay(50);
-       } 
-        for (int i = 0; i < NUMPIXELS; i++) {
-            strip6.setPixelColor(i, strip6.Color(0, 255, 0));
-            strip6.show();
-            
-          }
-        led1 = 1;
-        led2 = 1;
-        led3 = 1;
-        led4 = 1;
-        led5 = 1;
-        led7 = 1;
-        led8 = 1;
-        led9 = 1;
-        led10 = 1;
-        
-        triangle_game = 1;
-        state = WAIT_BALL;
-       
-      }
-      if(level_game == 5){
-        
-        led1 = 1;
-
-        /*
-         * 
-         * refaire l'ordre d'allumage des strips et des leds 
-         * 
-         */
-       
-        Serial.println("mouvement detecte 10 ");
-        for (int i = 0; i < NUMPIXELS; i++) {
-          strip10.setPixelColor(i, strip10.Color(255, 0, 0));
-          strip10.show();
-          delay(30);
-        }
-        int y = NUMPIXELS - 1;
-        for (int i = 0; i < NUMPIXELS; i++) {
-          strip9.setPixelColor(y, strip9.Color(255, 0, 0));
-          strip8.setPixelColor(i, strip8.Color(255, 0, 0));
-          strip9.show();
-          strip8.show();
-          y--;
-          delay(30);
-          
-        }
-        y = NUMPIXELS - 1;
-         for (int i = 0; i < NUMPIXELS; i++) {
-          strip5.setPixelColor(y, strip5.Color(255, 0, 0));
-          strip7.setPixelColor(i, strip7.Color(255, 0, 0));
-          strip5.show();
-          strip7.show();
-          y--;
-          delay(30);
-          
-        }
-        y = NUMPIXELS - 1;
-         for (int i = 0; i < NUMPIXELS; i++) {
-          strip1.setPixelColor(i, strip1.Color(255, 0, 0));
-          strip4.setPixelColor(y, strip4.Color(255, 0, 0));
-          strip1.show();
-          strip4.show();
-          y--;
-          delay(30);
-        }
-        y = NUMPIXELS - 1;
-         for (int i = 0; i < NUMPIXELS; i++) {
-          strip2.setPixelColor(i, strip2.Color(255, 0, 0));
-          strip3.setPixelColor(y, strip3.Color(255, 0, 0));
-          strip2.show();
-          strip3.show();
-          y--;
-          delay(30);
-        }
-        for(int z = 0; z< 20; z++){ 
-        
-        for (int i = 0; i < NUMPIXELS; i++) {
-            strip1.setPixelColor(i, strip1.Color(0, 0, 0));
-            strip2.setPixelColor(i, strip2.Color(0, 0, 0));
-            strip3.setPixelColor(i, strip3.Color(0, 0, 0));
-            strip4.setPixelColor(i, strip4.Color(0, 0, 0));
-            strip5.setPixelColor(i, strip5.Color(0, 0, 0));
-            strip7.setPixelColor(i, strip7.Color(0, 0, 0));
-            strip8.setPixelColor(i, strip8.Color(0, 0, 0));
-            strip9.setPixelColor(i, strip9.Color(0, 0, 0));
-            strip10.setPixelColor(i, strip10.Color(0, 0, 0));
-            strip1.show();
-            strip2.show();
-            strip3.show();
-            strip4.show();
-            strip5.show();
-            strip7.show();
-            strip8.show();
-            strip9.show();
-            strip10.show();
-          }
-          delay(50);
-         for (int i = 0; i < NUMPIXELS; i++) {
-            strip1.setPixelColor(i, strip1.Color(255, 0, 0));
-            strip2.setPixelColor(i, strip2.Color(255, 0, 0));
-            strip3.setPixelColor(i, strip3.Color(255, 0, 0));
-            strip4.setPixelColor(i, strip4.Color(255, 0, 0));
-            strip5.setPixelColor(i, strip5.Color(255, 0, 0));
-            strip7.setPixelColor(i, strip7.Color(255, 0, 0));
-            strip8.setPixelColor(i, strip8.Color(255, 0, 0));
-            strip9.setPixelColor(i, strip9.Color(255, 0, 0));
-            strip10.setPixelColor(i, strip10.Color(255, 0, 0));
-            strip1.show();
-            strip2.show();
-            strip3.show();
-            strip4.show();
-            strip5.show();
-            strip7.show();
-            strip8.show();
-            strip9.show();
-            strip10.show();
-            
-          }
-          delay(50);
-       } 
-        for (int i = 0; i < NUMPIXELS; i++) {
-            strip6.setPixelColor(i, strip6.Color(0, 255, 0));
-            strip6.show();
-            
-          }
-        led1 = 1;
-        led2 = 1;
-        led3 = 1;
-        led4 = 1;
-        led5 = 1;
-        led7 = 1;
-        led8 = 1;
-        led9 = 1;
-        led10 = 1;
-        
-        triangle_game = 1;
-        state = WAIT_BALL;
-       
-      }
-       
-
-    break;
     case STOP:
       Serial.println("STOP");
 
@@ -1819,7 +495,7 @@ void loop() {
       // statements
       break;
   }
-  Serial.println("Sortie switch case");
+  //Serial.println("Sortie switch case");
 
 
 }

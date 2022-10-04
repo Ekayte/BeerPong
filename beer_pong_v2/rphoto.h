@@ -1,0 +1,1 @@
+bool read_rphoto(int num_strip);
