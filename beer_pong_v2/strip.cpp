@@ -46,27 +46,6 @@ Adafruit_NeoPixel strip9 = Adafruit_NeoPixel(NUMPIXELS, LED_PIN10, NEO_GRB + NEO
 
 Adafruit_NeoPixel Table_strips[NB_STRIPS] = {strip0, strip1, strip2, strip3, strip4, strip5, strip6, strip7, strip8, strip9};
 
- //definition de la couleur rouge des bandeau de leds
-uint32_t Table_color_strips_red[NB_STRIPS];
-for(int i =0; i < NB_STRIPS; i++){
-  uint32_t color_strip_red = Table_strips[i].Color(255, 0, 0);
-  Table_color_strips_red[i] = color_strip_red;
-}
-
-//definition de la couleur verte des bandeau de leds
-uint32_t Table_color_strips_green[NB_STRIPS];
-for(int i =0; i < NB_STRIPS; i++){
-  uint32_t color_strip_green = Table_strips[i].Color(0, 255, 0);
-  Table_color_strips_green[i] = color_strip_green;
-}
-
-//definition de la couleur bleu des bandeau de leds
-uint32_t Table_color_strips_blue[NB_STRIPS];
-for(int i =0; i < NB_STRIPS; i++){
-  uint32_t color_strip_blue = Table_strips[i].Color(0, 0, 255);
-  Table_color_strips_blue[i] = color_strip_blue;
-}
-
 
 void clear_all_strip(){
   for(int i = 0; i<NB_STRIPS; i++){
@@ -83,7 +62,7 @@ void init_strips(){ //initialisation du bd(bandeau de leds)
 void set_all_strips_green(){
     for(int i = 0; i<NB_STRIPS; i++){
         for(int y = 0; y<NUMPIXELS; y++){
-            Table_strips[i].setPixelColor(y,Table_color_strips_green[i]);
+            Table_strips[i].setPixelColor(y,Table_strips[i].Color(0, 255, 0));
             Table_strips[i].show();
         }
     }
@@ -91,7 +70,7 @@ void set_all_strips_green(){
 void set_all_strips_red(){
     for(int i = 0; i<NB_STRIPS; i++){
         for(int y = 0; y<NUMPIXELS; y++){
-            Table_strips[i].setPixelColor(y,Table_color_strips_red[i]);
+            Table_strips[i].setPixelColor(y,Table_strips[i].Color(255, 0, 0));
             Table_strips[i].show();
         }
     }
@@ -99,7 +78,7 @@ void set_all_strips_red(){
 
 void set_strip_red(int num_strip){
     for(int y = 0; y<NUMPIXELS; y++){
-        Table_strips[num_strip].setPixelColor(y, Table_color_strips_red[num_strip]);
+        Table_strips[num_strip].setPixelColor(y, Table_strips[num_strip].Color(255, 0, 0));
         Table_strips[num_strip].show();
         delay(DELAYVAL);
     }
@@ -107,27 +86,35 @@ void set_strip_red(int num_strip){
 
 void set_strip_green(int num_strip){
     for(int y = 0; y<NUMPIXELS; y++){
-        Table_strips[num_strip].setPixelColor(y, Table_color_strips_green[num_strip]);
+        Table_strips[num_strip].setPixelColor(y, Table_strips[num_strip].Color(0, 255, 0));
         Table_strips[num_strip].show();
         delay(DELAYVAL);
     }
 }
 
-
+void set_strip_yello(int num_strip){
+    for(int y = 0; y<NUMPIXELS; y++){
+        Table_strips[num_strip].setPixelColor(y, Table_strips[num_strip].Color(251, 255, 0));
+        Table_strips[num_strip].show();
+        delay(DELAYVAL);
+    }
+}
 // Rainbow-enhanced theater marquee. Pass delay time (in ms) between frames.
 void rainbowRoad(int wait) {
     int firstPixelHue = 0;     // First pixel starts at red (hue 0)
-    for(int i = 0; i<NB_STRIPS; i++){
-        for(int a=0; a<30; a++) {  // Repeat 30 times...
-            for(int b=0; b<3; b++) { //  'b' counts from 0 to 2...
+    
+    
+      for(int a=0; a<30; a++) {  // Repeat 30 times...
+          for(int b=0; b<3; b++) { //  'b' counts from 0 to 2...
+            for(int i = 0; i<NB_STRIPS; i++){
                 Table_strips[i].clear();         //   Set all pixels in RAM to 0 (off)
             
                 // 'c' counts up from 'b' to end of strip in increments of 3...
-                for(int c=b; c<NB_STRIPS; c += 3) {
+                for(int c=b; c<Table_strips[i].numPixels(); c += 3) {
                     // hue of pixel 'c' is offset by an amount to make one full
                     // revolution of the color wheel (range 65536) along the length
                     // of the strip (strip.numPixels() steps):
-                    int hue = firstPixelHue + c * 65536L / NB_STRIPS;
+                    int hue = firstPixelHue + c * 65536L / Table_strips[i].numPixels();
                     uint32_t color = Table_strips[i].gamma32(Table_strips[i].ColorHSV(hue)); // hue -> RGB
                     Table_strips[i].setPixelColor(c, color); // Set pixel 'c' to value 'color'
                   
@@ -140,3 +127,22 @@ void rainbowRoad(int wait) {
         }
     }
 }
+
+void rainbow(int wait)
+{  
+      for (long firstPixelHue = 0; firstPixelHue < 5 * 65536; firstPixelHue += 256)
+      {
+      for(int i = 0; i<NB_STRIPS; i++){
+        for (int y = 0; y < Table_strips[i].numPixels(); y++)
+        { 
+          
+            int pixelHue = firstPixelHue + (y * 65536L / Table_strips[i].numPixels());
+           
+            Table_strips[i].setPixelColor(y, Table_strips[i].gamma32(Table_strips[i].ColorHSV(pixelHue)));
+        }
+        Table_strips[i].show(); // Update strip with new contents
+        delay(wait);  // Pause for a moment
+      }        
+    }
+}
+

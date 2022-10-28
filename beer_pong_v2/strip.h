@@ -13,3 +13,9 @@ void set_all_strips_red();
 void set_strip_red(int num_strip);
 
 void set_strip_green(int num_strip);
+
+void set_strip_yello(int num_strip);
+
+void rainbow(int wait);
+
+void theaterChaseRainbow(int wait);
